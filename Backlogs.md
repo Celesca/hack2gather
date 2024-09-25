@@ -24,7 +24,11 @@ This workshop will focus on building the Minimum Viable Product (MVP) functional
     - Description
     - School / University
     - Degree (E.g. Bachelor's Degree Year 2)
-    - Education Field (E.g. Computer Engineering, Economics)
+    - Education Field including 3 main types:
+      	- Technology Field
+      	- Business Field
+      	- Marketing Field
+      	- Ideate Field
 - Users can change their personal preferences
 - Users can see lists of their friend in profiles.
 
@@ -81,35 +85,40 @@ Requirements: Consist with user stories and acceptance criteria as well as techn
 
 # Story 1:
 
-As a Shopper, I want to view a list of available products, so that I can browse and select the products I want to purchase.
+As a users, I want to login to the system, so that I can view anything in the website.
 
 ## Acceptance Criteria:
-- The API retrieves a list of all products
-- Each product object includes essential details like id, name, description, price, sku and stock quantity.
+- The API retrieves the 404 Error or 200 OK.
 
 ## Technical Requirements:
-- REST API Endpoint: GET /products
-- Response: 200 OK with a list of products in JSON format
-- Each product object should include id, name, description, price, sku and stock quantity.
-- any error should be handled and return 404 Not Found with an appropriate error message if the product doesn't exist.
-		for example: {"message": "Product not found"} with 404 status code
+- REST API Endpoint: POST /login
+- Request Body: Content Type: application/json
+- Request Body Example: {"email": "test.owen@gmail.com", "password": "1234"}
+- Response: 200 OK with cookies
+
+for example: {"message": "Email or password not matched"} with 404 status code
 
 # Story 2:
 
-As a Shopper, I want to view details of a specific product by its SKU, so that I can get more information about the product before making a purchase.
+As a customers, I want to register my account to the system, so that I can login in the future.
 
 ## Acceptance Criteria:
-- The API retrieves details of a specific product based on the provided SKU.
-- Returns a 200 OK with the product details if found.
-- Returns a 404 Not Found with an appropriate error message if the product doesn't exist.
+- Returns a 200 OK with the good information
+- Returns a 400 Error if some fields are not valid or already have that email.
 
 ## Technical Requirements:
-- REST API Endpoint: GET /products/{sku}
-- Path Variable: {sku} - Represents the unique product identifier.
-- Response: 200 OK with the product details in JSON format if found
-- Response: 404 Not Found with an appropriate error message if the product doesn't exist
-- any error should be handled and return 404 Not Found with an appropriate error message if the product doesn't exist.
-		for example: {"message": "Product not found"} with 404 status code
+- REST API Endpoint: POST /register
+- Request Body: Content Type: application/json
+- Request Body Example: {"email" : "test.something@gmail.com", "password": "1234", "name": "Folk", "surname": "Kasidit", "degree": "Bachelor"}
+- Note That : The education field should be the dropdown and fixed type!
+- Response: 200 OK
+- Response: 400 with appropriate request body and duplicate email
+
+for example: {"message": "Email already exists"} with 400 status code
+
+
+Wait for next steps!
+-------- 
 
 # Story 3:
 
