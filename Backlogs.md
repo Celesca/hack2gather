@@ -23,34 +23,62 @@ This workshop will focus on building the Minimum Viable Product (MVP) functional
 - Users can add and change information about themselves including:
     - Description
     - School / University
-    - Degree / Education Fields
+    - Degree (E.g. Bachelor's Degree Year 2)
+    - Education Field (E.g. Computer Engineering, Economics)
 - Users can change their personal preferences
+- Users can see lists of their friend in profiles.
 
 ### Personal preferences Feature:
 - After users register, users will should did the personal perferences first.
 - Users can skip the personal preferences at first time.
 - Users can did the personal preferences tests anytime.
  
-### Slide Feature
+### Connection Feature:
+- Users can slide and pick up for the person who have the similar persona.
+- Users can Add Friend (Matching) to other person.
+- Users can Direct Message to other person.
 
-Products: Customers can browse and view product details which is associated with Shop
-Carts: Customers can add and remove items to their carts.
-Promotions: Customers can apply promotional codes to their carts.
-- Promotion could be a percentage discount or a fixed amount discount.
-- Promotion could be applied to the entire cart or specific products.
-- Promotion could be Buy 2 Get 1 Free or Buy 3 Get 1 Free
-Kpoints: Customers can earn Kpoints for every purchase and redeem them for discounts.
-- Kpoints could be earned based on the amount spent.
-- Kpoints could be redeemed for a discount on the next purchase.
-- Kpoints could be used to get a free product.
-- Kpoints could be used to get a discount on the entire cart.
+### Friend Feature:
+- Users can see lists of their friends in friend tab
+- Users can see the friend request.
+- Users can reject or approve the friend request.
+
+### Message Feature:
+- Users can send direct message to other people.
+- Users can open their message boxes.
+
+### Hackathon Feature:
+- Users can see all the hackathons in lists.
+- Users can open the hackathon page of each events.
+- Users can see all the teams that are currently opened for others.
+- Users can opened their teams to invite others including:
+	- Team Name
+	- Team Member
+- Users can receive the invitation through the notifications
+
+### Notification Feature:
+- Users can receive the unread messages from others
+- Users can approve or reject the invitation from others team.
+- Users can opened to see the invatation which need to including:
+	- Hackathon Event
+ 	- Team Name
+  	- Approved or Reject Button
+- After users approve the invatation, the team message will automatically created and hackathon opened team will closed.
 
 Requirements: Consist with user stories and acceptance criteria as well as technical requirements.
-REST API Endpoints: could be /products, /carts, /promotions, /kpoints
-assume we have fix user id for now, so we can use /carts/{username} to get the cart of the user
+
+## <div style="color: red;">Future Plan: </div>
+
+- The board (like Pantip) in the hackathon.
+- The SLM Chatbot with RAG in the hackathon Q&A.
 
 
-User Stories:
+
+--- 
+
+# User Stories:
+
+
 # Story 1:
 
 As a Shopper, I want to view a list of available products, so that I can browse and select the products I want to purchase.
