@@ -1,6 +1,6 @@
-const express = require('express');
-const port = 3000;
-const cors = require('cors');
+const express = require('express')
+const port = 3000
+const cors = require('cors')
 // const mysql = require('mysql2');
 
 // const connection = mysql.createConnection({
@@ -9,14 +9,14 @@ const cors = require('cors');
 //   database: 'mydb'
 // });
 
-const app = express();
+const app = express()
 app.use(express.json())
-app.use(cors());
+app.use(cors())
 
 app.get('/v1/healthcheck', (req, res) => {
-  res.send('Hello, World!');
-});
+  res.send('Hello, World!')
+})
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+  console.log(`Server running at http://localhost:${port}`)
+})
