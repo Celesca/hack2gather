@@ -12,10 +12,10 @@ async function main() {
         create: {
           title: 'Check out Prisma with Next.js',
           content: 'https://www.prisma.io/nextjs',
-          published: true,
-        },
-      },
-    },
+          published: true
+        }
+      }
+    }
   })
 
   const bob = await prisma.user.upsert({
@@ -29,16 +29,16 @@ async function main() {
           {
             title: 'Follow Prisma on Twitter',
             content: 'https://twitter.com/prisma',
-            published: true,
+            published: true
           },
           {
             title: 'Follow Nexus on Twitter',
             content: 'https://twitter.com/nexusgql',
-            published: true,
-          },
-        ],
-      },
-    },
+            published: true
+          }
+        ]
+      }
+    }
   })
   console.log({ alice, bob })
 }
