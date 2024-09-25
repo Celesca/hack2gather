@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+const cors = require('cors');
+
+app.use(cors());
+
 app.get('/v1/healthcheck', (req, res) => {
   res.send('Hello, World!');
 });
