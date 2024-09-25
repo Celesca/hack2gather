@@ -1,13 +1,13 @@
 const express = require('express');
 const port = 3000;
 const cors = require('cors');
-const mysql = require('mysql2');
+// const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'mydb'
-});
+// const connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   database: 'mydb'
+// });
 
 const app = express();
 app.use(express.json())
