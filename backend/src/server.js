@@ -12,15 +12,15 @@ app.use(express.json())
 app.use(
   cors({
     credentials: true,
-    origin: ['http://localhost:5173'],
-  }),
-);
+    origin: ['http://localhost:5173']
+  })
+)
 
 app.get('/v1/healthcheck', (req, res) => {
   res.send('Hello, World!')
 })
 
-app.get("/v1/posts", async (req, res) => {
+app.get('/v1/posts', async (req, res) => {
   const posts = await prisma.post.findMany()
   res.json(posts)
 })
