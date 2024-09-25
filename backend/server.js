@@ -1,5 +1,8 @@
 const express = require('express')
-const port = 3000
+const dotenv = require('dotenv')
+dotenv.config()
+
+const port = process.env.PORT || 3000
 const cors = require('cors')
 // const mysql = require('mysql2');
 
