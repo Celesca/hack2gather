@@ -82,6 +82,7 @@ Requirements: Consist with user stories and acceptance criteria as well as techn
 
 # User Stories:
 
+# -- Login Feature --
 
 # Story 1:
 
@@ -109,225 +110,124 @@ As a customers, I want to register my account to the system, so that I can login
 ## Technical Requirements:
 - REST API Endpoint: POST /register
 - Request Body: Content Type: application/json
-- Request Body Example: {"email" : "test.something@gmail.com", "password": "1234", "name": "Folk", "surname": "Kasidit", "degree": "Bachelor"}
+- Request Body Example: {"email" : "test.something@gmail.com", "password": "1234", "name": "Folk", "surname": "Kasidit", "degree": "Bachelor", "education": "Year2"}
 - Note That : The education field should be the dropdown and fixed type!
 - Response: 200 OK
 - Response: 400 with appropriate request body and duplicate email
 
 for example: {"message": "Email already exists"} with 400 status code
 
-
-Wait for next steps!
--------- 
+# -- Profile Feature --
 
 # Story 3:
 
-As a Product Manager, I want to have pagination for the products, so that I can manage the products more efficiently.
-
-## Acceptance Criteria:
-- The API retrieves a list of all products with pagination.
-- Each product object includes essential details like id, name, description, price, sku and stock quantity.
-- The API supports pagination with query parameters like page and limit.
+As a users, I want to edit my profile.
 
 ## Technical Requirements:
-- REST API Endpoint: GET /products with query parameters
-- Query Parameters: page, limit
-- Response: 200 OK with a list of products in JSON format
-- Each product object should include id, name, description, price, sku and stock quantity.
-- The API should support pagination based on the query parameters.
-
+- REST API Endpoint: POST /profile/{user_id} with request body
+- Path Variable: user_id
+- Request Body: Content Type: application/json
+- Request Body: experiences, technical skills, name, surname, review, description, school, degree, education field, personal preferences
+- Response: 200 OK with a list of information in that user profile
 
 # Story 4:
 
-As a Shopper, I want to add a specific product to my cart, so that I can purchase the product later.
-
-## Acceptance Criteria:
-- The API adds the specified product (identified by its ID) to the user's cart with the provided quantity.
-- Returns a 201 Created with a success message if the item is added successfully.
-- Returns a 400 Bad Request with an appropriate error message if the request body is invalid (e.g., missing fields or invalid data format).
+As a Users, I want to see the list of my friends.
 
 ## Technical Requirements:
-- REST API Endpoint: POST /carts/{username}/items
-- Path Variable: {username} - Represents the unique user identifier.
-- Request Body: Content Type: application/json
-- Request Body Example: {"productSku": 1, "quantity": 2}
-- Response: 201 Created with a success message if the item is added successfully
-- Response: 400 Bad Request with an appropriate error message if the request body is invalid
-- any error should be handled and return 400 Bad Request with an appropriate error message if the request body is invalid.
-		for example: {"message": "Invalid request body"} with 400 status code
+- REST API Endpoint: GET /friends/{user_id}
+- Path Variable : user_id
+- Response: 200 OK with the list of friends in that user.
 
+# -- Connection Feature --
 
 # Story 5:
 
-As a Shopper, I want to apply a promotion code discount to *my cart*, so that I can get a discount on my purchase.
-
-## Acceptance Criteria:
-- The API applies the promotion code `FIXEDAMOUNT10` discount to the shopper cart.
-- Returns a 200 OK with the updated cart details if the promotion code is applied successfully.
+As, a Users, I want to see others profile.
 
 ## Technical Requirements:
-- REST API Endpoint: POST /carts/{username}/promotions
-- Path Variable: {username} - Represents the unique user identifier.
-- Request Body: Content Type: application/json
-- Request Body Example: {"code": "FIXEDAMOUNT10"}
-
+- REST API Endpoint: GET /connections
+- Response: 200 OK with the list of all users in the system
+- Normally, I want the pagination but nevermind!
 
 # Story 6:
 
-As a Shopper, I want to apply a promotion code discount to *specific product* in my cart, so that I can get a discount on my purchase.
-
-## Acceptance Criteria:
-- The API applies the promotion code `FIXEDAMOUNT2` discount to the specific product sku `STATIONERY-STAPLER-SWINGLINE` in the shopper cart.
-- Returns a 200 OK with the updated cart details if the promotion code is applied successfully.
+As a users, I want to add friend to other persons.
 
 ## Technical Requirements:
-- REST API Endpoint: POST /carts/{username}/promotions
-- Path Variable: {username} - Represents the unique user identifier.
+- REST API Endpoint: POST /friends_request/{target_id} with Request Body
+- Path Variable: {target_id} - The user we want to added.
 - Request Body: Content Type: application/json
-- Request Body Example: {"code": "FIXEDAMOUNT2", "productSkus": ["STATIONERY-STAPLER-SWINGLINE"]}
+- Request Body Example: {"user_id": "XXX-XXX-XXXX"} this is the user_id whom want to add the target_id
 
+# Story 7: ❌ (Folk will handle this Message Feature with Pusher and WebSocket )
 
-# Story 7:
-
-As a Product Owner, I want to limit the discount amount when shopper apply promotion code to the cart, so that I can control the discount amount.
+As a users can direct messages to others 
 
 ## Acceptance Criteria:
-- The API applies the promotion code `THIRTYPERCENTOFFLIMIT200` 30% Discount Up to 200 Baht Off Entire Cart discount to the shopper cart.
-- Returns a 200 OK with the updated cart details if the promotion code is applied successfully.
+- WebSocket Endpoint:
 
-## Technical Requirements:
-- REST API Endpoint: POST /carts/{username}/promotions
-- Path Variable: {username} - Represents the unique user identifier.
-- Request Body: Content Type: application/json
-- Request Body Example: {"code": "THIRTYPERCENTOFFLIMIT200"}
+# -- Friend Feature --
 
 # Story 8:
 
-As a Shopper, I want to apply a promotional code to get free product, so that I can get a free item on my purchase.
-
-## Acceptance Criteria:
-- The API applies the promotional code `BUY2GET1FREE` to the shopper cart.
-- Returns a 200 OK with the updated cart details if the promotional code is applied successfully.
+As a users, I want to see the friend request.
 
 ## Technical Requirements:
-- REST API Endpoint: POST /carts/{username}/promotions
-- Path Variable: {username} - Represents the unique user identifier.
-- Request Body: Content Type: application/json
-- Request Body Example: {"code": "BUY2GET1FREE"}
+- REST API Endpoint: GET /friend_request/{user_id}
+- Path Variable: {user_id}
+- Response: 200 OK with the lists of friend request of that users!
 
 # Story 9:
 
-As a Shopper, I want to apply a promotional code to specific product to get discount, so that I can get a discount on my purchase.
-
-## Acceptance Criteria:
-- The API applies the promotional code `SPECIFICPRODUCT30OFF` to the specific product sku `MOBILE-APPLE-IPHONE-12-PRO` in the shopper cart.
+As a users, I want to reject or approved the friend request.
 
 ## Technical Requirements:
-- REST API Endpoint: POST /carts/{username}/promotions
-- Path Variable: {username} - Represents the unique user identifier.
-- Request Body: Content Type: application/json
-- Request Body Example: {"code": "SPECIFICPRODUCT30OFF", "productSkus": ["MOBILE-APPLE-IPHONE-12-PRO"]}
+- REST API Endpoint: POST /friend_request/approve/{user_id}
+- Path Variable: {user_id} are the people who will accepted or rejected.
+- Request Body: { "status": 1, "target_id": "XXX-XXX-XXXX" }
+- When the status 1 is approved and status 0 is rejected
+- Response: 200 OK when success and 400 Error when Request body isn't true.
+
+# -- Hackathon Feature --
 
 # Story 10:
-As a Shopper, I want to to have a promotion applied to a product automatically, so that I can get a discount on my purchase.
-
-## Acceptance Criteria:
-- The API applies the promotion code discount to the product sku `MOBILE-APPLE-IPHONE-12-PRO` in the shopper cart.
-- Returns a 200 OK with the updated cart details if the promotion code is applied successfully.
+As a Users, I want to see all hackathon events
 
 ## Technical Requirements:
-- REST API Endpoint: POST /carts/{username}/promotions
-- Path Variable: {username} - Represents the unique user identifier.
-- Request Body: Content Type: application/json
-- Request Body Example: {"productSku": "MOBILE-APPLE-IPHONE-12-PRO"}
+- REST API Endpoint: GET /hackathons
+- Response 200 OK: with list of hackathons
 
 # Story 11:
 
-As a Shopper, I want to earn Kpoints for every purchase, so that I can redeem them for discounts on my next purchase.
-
-## Acceptance Criteria:
-- The API calculates and adds Kpoints to the user's account based on the amount spent.
-- Returns a 200 OK with the updated Kpoints balance if the Kpoints are added successfully.
-- Returns a 400 Bad Request with an appropriate error message if the request body is invalid (e.g., missing fields or invalid data format).
+As a users, I want to enter the hackathon of each events
 
 ## Technical Requirements:
-- REST API Endpoint: POST /kpoints/{username}/earn
-- Path Variable: {username} - Represents the unique user identifier.
-- Request Body: Content Type: application/json
-- Request Body Example: {"amount_spent": 100.00}
-- Response: 200 OK with the updated Kpoints balance if the Kpoints are added successfully
-- Response: 400 Bad Request with an appropriate error message if the request body is invalid
-- any error should be handled and return 400 Bad Request with an appropriate error message if the request body is invalid.
-		for example: {"message": "Invalid request body"} with 400 status code
+- REST API Endpoint: GET /hackathons/{event_id}
+- Path Variable: event_id is the primary key of those events
+- ⭐ Remember to return the json format of hackathon event object including
+	- { "event_id" , "description", "team" : [ ] }
+   	- the team object should contains the array of teams and we can accepted
+   	- However! In the technicial terms 🥊 I think we shouldn't implemented this feature because I will causes us a lot of time to design the another tables. We will need to talk that we want this feature or just showing the team and let them click to message themselves! ⏰
+ 
+# -- Notification --
 
 # Story 12:
 
-As a Shopper, I want to redeem Kpoints for a discount on my next purchase, so that I can save money on my order.
-
-## Acceptance Criteria:
-- The API applies the Kpoints discount to the user's cart based on the number of Kpoints redeemed.
-- Returns a 200 OK with the updated cart details if the Kpoints are redeemed successfully.
-- Returns a 404 Not Found with an appropriate error message if the Kpoints are insufficient or invalid.
+As a users, I want to see the notifications of all systems.
 
 ## Technical Requirements:
-- REST API Endpoint: POST /carts/{username}/kpoints
-- Path Variable: {username} - Represents the unique user identifier.
-- Request Body: Content Type: application/json
-- Request Body Example: {"kpoints": 100}
-- Response: 200 OK with the updated cart details if the Kpoints are redeemed successfully
-- Response: 404 Not Found with an appropriate error message if the Kpoints are insufficient or invalid
-- any error should be handled and return 404 Not Found with an appropriate error message if the Kpoints are insufficient or invalid.
-		for example: {"message": "Insufficient Kpoints"} with 404 status code
+- REST API Endpoint: GET /notifications/{user_id}
+- Path Variable: user_id
+- Response: 200 OK and get the lists of all notifications
 
 # Story 13:
 
-As a Shopper, I want to remove a specific product from my cart, so that I can update my purchase before checking out.
-
-## Acceptance Criteria:
-- The API removes the specified product (identified by its ID) from the user's cart.
-- Any promotional discounts or Kpoints associated with the removed product should be recalculated and updated.
-- Returns a 200 OK with a success message if the item is removed successfully.
-- Returns a 404 Not Found with an appropriate error message if the product doesn't exist in the cart.
+As a users, I want to marked it as read message instead of unread notifications.
 
 ## Technical Requirements:
-- REST API Endpoint: DELETE /carts/{username}/items/{productSku}
-- Path Variable: {username} - Represents the unique user identifier.
-- Path Variable: {productSku} - Represents the unique product identifier.
-- Response: 200 OK with a success message if the item is removed successfully
-- Response: 404 Not Found with an appropriate error message if the product doesn't exist in the cart
-- any error should be handled and return 404 Not Found with an appropriate error message if the product doesn't exist in the cart.
-		for example: {"message": "Product not found in the cart"} with 404 status code
-
-# Story 14:
-
-As a Shopper, I want to view my cart details, so that I can review the products and discounts before checking out.
-
-## Acceptance Criteria:
-- The API retrieves the user's cart details including products, quantities, prices, discounts, and total amount.
-- Returns a 200 OK with the cart details in JSON format if the cart exists.
-- Returns a 404 Not Found with an appropriate error message if the cart doesn't exist.
-
-## Technical Requirements:
-- REST API Endpoint: GET /carts/{username}
-- Path Variable: {username} - Represents the unique user identifier.
-- Response: 200 OK with the cart details in JSON format if the cart exists
-- Response: 404 Not Found with an appropriate error message if the cart doesn't exist
-- any error should be handled and return 404 Not Found with an appropriate error message if the cart doesn't exist.
-		for example: {"message": "Cart not found"} with 404 status code
-
-# Story 15:
-
-As a Shopper, I want to place an order with the items in my cart, so that I can complete my purchase.
-
-## Acceptance Criteria:
-- The API creates an order with the items in the user's cart and updates the stock quantity of the products.
-- Returns a 201 Created with the order details if the order is placed successfully.
-- Returns a 400 Bad Request with an appropriate error message if the cart is empty or the stock quantity is insufficient.
-
-## Technical Requirements:
-- REST API Endpoint: POST /orders/{username}
-- Path Variable: {username} - Represents the unique user identifier.
-- Response: 201 Created with the order details if the order is placed successfully
-- Response: 400 Bad Request with an appropriate error message if the cart is empty or the stock quantity is insufficient
-- any error should be handled and return 400 Bad Request with an appropriate error message if the cart is empty or the stock quantity is insufficient.
-		for example: {"message": "Cart is empty"} with 400 status code
+- REST API Endpoint: POST /notifications/{user_id} with Request Body
+- Path Variable: user_id
+- Request Body: { "notification_id" , "123" , "status" : 1 }
+- The status 1 is read, and status 0 is unread.
+- When opened the notifications all of it will turn into status 1 because users read it.
