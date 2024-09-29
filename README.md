@@ -1,5 +1,14 @@
 # Hack2gather
 
+📚 Dear Frontend developer,
+
+please find attached the frontend folder in `/frontend` 
+Feel free to install other dependencies but let me know if you are installing one.
+
+Run the code with `npm run dev` because I use Vite.
+
+Don't forget to use `npm run lint` to formatting your code to clean code.
+
 📘 Dear Backend developer, (Including Hongyok, Owen and Kaew)
 
 please find attached the user story in the Backend folder's `Story.MD` to did your works!
