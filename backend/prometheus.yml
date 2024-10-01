@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 15s  # Default scrape interval
+
+scrape_configs:
+  - job_name: 'nodejs'  # Job name for your Node.js application
+    static_configs:
+      - targets: ['backend:3000']  # Reference to your backend service on port 3000

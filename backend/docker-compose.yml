@@ -57,6 +57,28 @@ services:
     networks:
       - my_network
 
+  # Prometheus Service
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"  # Prometheus UI
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Mount the Prometheus config
+    networks:
+      - my_network
+
+  # Grafana Service
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3001:3000"  # Expose Grafana on port 3001
+    depends_on:
+      - prometheus
+    networks:
+      - my_network
+
 networks:
   my_network:
     driver: bridge
