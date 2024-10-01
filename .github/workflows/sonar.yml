@@ -19,13 +19,12 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Change directory to backend
-        run: cd backend
-
       - name: Install dependencies
+        working-directory: ./backend  # Set the working directory to 'backend'
         run: npm install
 
       - name: Run SonarQube Scanner
+        working-directory: ./backend  # Ensure the scanner runs in 'backend'
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
