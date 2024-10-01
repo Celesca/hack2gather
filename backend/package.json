@@ -12,8 +12,7 @@
     "lint:fix": "eslint . --fix ",
     "test": "cross-env NODE_ENV=test jest --testTimeout=20000 --detectOpenHandles --forceExit",
     "prepare": "cd .. && husky backend/.husky",
-    "sonar": "sonar-scanner -Dsonar.projectKey=Celesca_hack2gather -Dsonar.sources=./src -Dsonar.exclusions=**/node_modules/** -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=celesca"
-
+    "sonar": "sonar-scanner"
   },
   "keywords": [],
   "author": "",
