@@ -29,7 +29,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           npm install sonarqube-scanner --save-dev
-          sonar-scanner \
+          npm run sonar \
+            -Dsonar.organization=celesca \
             -Dsonar.projectKey=Celesca_hack2gather \
             -Dsonar.sources=./src \
             -Dsonar.exclusions=**/node_modules/** \
