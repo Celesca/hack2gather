@@ -13,11 +13,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Skill {
+  skill_id Int @id @default(autoincrement())
+  skill_name String
+  users User[]
+}
+
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String
-  posts Post[]
+  user_id    Int    @id @default(autoincrement())
+  first_name String
+  last_name  String
+  dob        DateTime
+  email      String @unique
+  password   String
+  description String
+  school    String
+  degree    String
+  skill_id Int
+  skill Skill @relation(fields: [skill_id], references: [skill_id])
 }
 
 model Post {
@@ -25,6 +38,6 @@ model Post {
   title     String
   content   String
   published Boolean
-  user      User    @relation(fields: [userId], references: [id])
+
   userId    Int
 }
