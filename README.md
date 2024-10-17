@@ -48,6 +48,11 @@ Please follow instructions below to open the project 🔖
 4. Open the MySQL and PhpMyAdmin with docker
 `docker-compose up -d`
 
+5. Create the .env file in /backend
+
+PORT = 3000
+DATABASE_URL = "mysql://root:root@localhost:3306/hack_db"
+
 Docs :
 
 * localhost:3000 - for Backend Server
