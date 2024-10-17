@@ -1,5 +1,22 @@
 # Hack2gather
 
+## About This Project 
+
+Hack2gather is a new hackathon team finder platform aiming to provide a smooth and user-friendly experience for customers. 
+The pain point is sometimes student wants to apply for a hackathon. Unfortunately, they cannot find someone who are passionate in the same thing. Also, hey need to find someone that fits in the role they are missing and that's very hard if he is just a newbie.
+
+## Tech Stack : 
+
+- Frontend - React TypeScript, TailwindCSS
+- Backend - Node.js (Express.js), MySQL, Prisma (ORM), Pusher (WebSocket)
+- DevOps - SonarQube, Prometheus, Grafana, Github Actions, Husky
+- QA - Postman, Manual Testing
+
+
+---
+
+## Notes to developer of this project
+
 📚 Dear Frontend developer,
 
 please find attached the frontend folder in `/frontend` 
@@ -30,6 +47,11 @@ Please follow instructions below to open the project 🔖
 
 4. Open the MySQL and PhpMyAdmin with docker
 `docker-compose up -d`
+
+5. Create the .env file in /backend
+
+PORT = 3000
+DATABASE_URL = "mysql://root:root@localhost:3306/hack_db"
 
 Docs :
 
