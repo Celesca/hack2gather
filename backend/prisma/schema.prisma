@@ -14,17 +14,123 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String
-  posts Post[]
+  User_ID        Int      @id @default(autoincrement())
+  First_name     String
+  Last_name      String
+  DOB            DateTime
+  Email          String   @unique
+  Password       String
+  Description    String?
+  School_University String?
+  Education      String?
+  Rating         Int
+  Skills         Skill[]
+  Experiences    User_Experience[]
+  Notifications  User_Notification[]
+  Teams          Team[]
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String
-  published Boolean
-  user      User    @relation(fields: [userId], references: [id])
-  userId    Int
+model Skill_Type {
+  Skill_Type_ID  Int      @id @default(autoincrement())
+  Category_Skill String
+  Certification  String?
+  Skill_Detail   String?
+  Skill_Level    String
+  Skills         Skill[]
+}
+
+model Skill {
+  User_ID        Int
+  Skill_ID       Int
+  PRIMARY KEY (User_ID, Skill_ID)
+  User           User     @relation(fields: [User_ID], references: [User_ID])
+  SkillType      Skill_Type @relation(fields: [Skill_ID], references: [Skill_Type_ID])
+}
+
+model Experience {
+  Experience_ID   Int      @id @default(autoincrement())
+  Detail          String
+  Company_Name    String?
+  Start_Date      DateTime
+  End_Date        DateTime
+  Experience_Type String
+  Location        String?
+  Certification   String
+  Users           User_Experience[]
+}
+
+model User_Experience {
+  User_ID       Int
+  Experience_ID Int
+  PRIMARY KEY (User_ID, Experience_ID)
+  User          User       @relation(fields: [User_ID], references: [User_ID])
+  Experience    Experience @relation(fields: [Experience_ID], references: [Experience_ID])
+}
+
+model Notification {
+  Notification_ID  Int      @id @default(autoincrement())
+  Notification_detail String
+  Notification_Status Boolean
+  Users           User_Notification[]
+}
+
+model User_Notification {
+  User_ID       Int
+  Notification_ID Int
+  PRIMARY KEY (User_ID, Notification_ID)
+  User          User        @relation(fields: [User_ID], references: [User_ID])
+  Notification  Notification @relation(fields: [Notification_ID], references: [Notification_ID])
+}
+
+model Personal {
+  Personal_ID      Int      @id @default(autoincrement())
+  Personal_type    String
+  Personal_type_detail String?
+}
+
+model Hackathon {
+  Hackathon_ID     Int      @id @default(autoincrement())
+  Hackathon_Name   String
+  Poster           String?
+  Detail           String
+  Review_ID        Int
+  Start_recruiting DateTime
+  End_recruiting   DateTime
+  End_event        DateTime
+  Reviews          Review   @relation(fields: [Review_ID], references: [Review_ID])
+}
+
+model Review {
+  Review_ID        Int      @id @default(autoincrement())
+  Detail           String
+  Status_review    Boolean
+  Hackathon_ID     Int
+  Hackathon        Hackathon @relation(fields: [Hackathon_ID], references: [Hackathon_ID])
+}
+
+model Swipe {
+  Swipe_ID         Int      @id @default(autoincrement())
+  Swiper_ID        Int
+  Swipee_ID        Int
+  Swipe_Type       Boolean
+  Swiper           User     @relation(fields: [Swiper_ID], references: [User_ID])
+  Swipee           User     @relation(fields: [Swipee_ID], references: [User_ID])
+}
+
+model Match {
+  Match_ID         Int      @id @default(autoincrement())
+  User_AID         Int
+  User_BID         Int
+  Match_Datetime   DateTime
+  UserA            User     @relation(fields: [User_AID], references: [User_ID])
+  UserB            User     @relation(fields: [User_BID], references: [User_ID])
+}
+
+model Team {
+  Team_ID          Int      @id @default(autoincrement())
+  Team_Name        String
+  User_ID          Int
+  Review_ID        Int
+  User             User     @relation(fields: [User_ID], references: [User_ID])
+  Review           Review   @relation(fields: [Review_ID], references: [Review_ID])
 }
