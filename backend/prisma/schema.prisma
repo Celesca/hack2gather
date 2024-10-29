@@ -28,6 +28,10 @@ model User {
   Experiences    User_Experience[]
   Notifications  User_Notification[]
   Teams          Team[]
+  Swipes_Swiper  Swipe[] @relation("SwiperRelation")
+  Swipes_Swipee  Swipe[] @relation("SwipeeRelation")
+  MatchesA       Match[] @relation("UserARelation")
+  MatchesB       Match[] @relation("UserBRelation")
 }
 
 model Skill_Type {
@@ -42,9 +46,10 @@ model Skill_Type {
 model Skill {
   User_ID        Int
   Skill_ID       Int
-  PRIMARY KEY (User_ID, Skill_ID)
   User           User     @relation(fields: [User_ID], references: [User_ID])
   SkillType      Skill_Type @relation(fields: [Skill_ID], references: [Skill_Type_ID])
+
+  @@id([User_ID, Skill_ID])
 }
 
 model Experience {
@@ -62,9 +67,10 @@ model Experience {
 model User_Experience {
   User_ID       Int
   Experience_ID Int
-  PRIMARY KEY (User_ID, Experience_ID)
   User          User       @relation(fields: [User_ID], references: [User_ID])
   Experience    Experience @relation(fields: [Experience_ID], references: [Experience_ID])
+
+  @@id([User_ID, Experience_ID])
 }
 
 model Notification {
@@ -77,9 +83,10 @@ model Notification {
 model User_Notification {
   User_ID       Int
   Notification_ID Int
-  PRIMARY KEY (User_ID, Notification_ID)
   User          User        @relation(fields: [User_ID], references: [User_ID])
   Notification  Notification @relation(fields: [Notification_ID], references: [Notification_ID])
+
+  @@id([User_ID, Notification_ID])
 }
 
 model Personal {
@@ -93,11 +100,10 @@ model Hackathon {
   Hackathon_Name   String
   Poster           String?
   Detail           String
-  Review_ID        Int
   Start_recruiting DateTime
   End_recruiting   DateTime
   End_event        DateTime
-  Reviews          Review   @relation(fields: [Review_ID], references: [Review_ID])
+  Reviews          Review[]
 }
 
 model Review {
@@ -106,6 +112,7 @@ model Review {
   Status_review    Boolean
   Hackathon_ID     Int
   Hackathon        Hackathon @relation(fields: [Hackathon_ID], references: [Hackathon_ID])
+  Teams            Team[]
 }
 
 model Swipe {
@@ -113,8 +120,8 @@ model Swipe {
   Swiper_ID        Int
   Swipee_ID        Int
   Swipe_Type       Boolean
-  Swiper           User     @relation(fields: [Swiper_ID], references: [User_ID])
-  Swipee           User     @relation(fields: [Swipee_ID], references: [User_ID])
+  Swiper           User     @relation(name: "SwiperRelation", fields: [Swiper_ID], references: [User_ID])
+  Swipee           User     @relation(name: "SwipeeRelation", fields: [Swipee_ID], references: [User_ID])
 }
 
 model Match {
@@ -122,8 +129,8 @@ model Match {
   User_AID         Int
   User_BID         Int
   Match_Datetime   DateTime
-  UserA            User     @relation(fields: [User_AID], references: [User_ID])
-  UserB            User     @relation(fields: [User_BID], references: [User_ID])
+  UserA            User     @relation(name: "UserARelation", fields: [User_AID], references: [User_ID])
+  UserB            User     @relation(name: "UserBRelation", fields: [User_BID], references: [User_ID])
 }
 
 model Team {
