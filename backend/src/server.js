@@ -6,6 +6,7 @@ dotenv.config()
 const port = process.env.PORT || 3000
 const cors = require('cors')
 const loginRouter = require('./routers/loginRouter')
+const messageRouter = require('./routers/messageRouter')
 
 const app = express()
 app.use(express.json())
@@ -16,6 +17,7 @@ app.use(
   })
 )
 
+app.use('/v1', messageRouter);
 app.use('/v1', loginRouter);
 
 app.get('/v1/healthcheck', (req, res) => {
