@@ -5,7 +5,6 @@ dotenv.config()
 
 const port = process.env.PORT || 3000
 const cors = require('cors')
-const prisma = require('./db/connection')
 const loginRouter = require('./routers/loginRouter')
 
 const app = express()
