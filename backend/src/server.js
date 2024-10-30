@@ -19,14 +19,8 @@ app.use(
 
 app.use('/v1', loginRouter);
 
-
 app.get('/v1/healthcheck', (req, res) => {
   res.send('Hello, World!')
-})
-
-app.get('/v1/posts', async (req, res) => {
-  const posts = await prisma.post.findMany()
-  res.json(posts)
 })
 
 app.listen(port, () => {
