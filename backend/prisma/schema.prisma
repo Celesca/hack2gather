@@ -14,130 +14,195 @@ datasource db {
 }
 
 model User {
-  User_ID        Int      @id @default(autoincrement())
-  First_name     String
-  Last_name      String
-  DOB            DateTime
-  Email          String   @unique
-  Password       String
-  Description    String?
-  School_University String?
-  Education      String?
-  Rating         Int
-  Skills         Skill[]
-  Experiences    User_Experience[]
-  Notifications  User_Notification[]
-  Teams          Team[]
-  Swipes_Swiper  Swipe[] @relation("SwiperRelation")
-  Swipes_Swipee  Swipe[] @relation("SwipeeRelation")
-  MatchesA       Match[] @relation("UserARelation")
-  MatchesB       Match[] @relation("UserBRelation")
-}
+  id              Int       @id @default(autoincrement())
+  email           String    @unique
+  password        String
+  firstName       String
+  lastName        String
+  description     String?
+  school          String?
+  degree          String?
+  fieldOfStudy    String?   // Technology, Business, Marketing, or Ideate
+  rating          Float     @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
-model Skill_Type {
-  Skill_Type_ID  Int      @id @default(autoincrement())
-  Category_Skill String
-  Certification  String?
-  Skill_Detail   String?
-  Skill_Level    String
-  Skills         Skill[]
+  // Profile relationships
+  skills          UserSkill[]
+  experiences     Experience[]
+  receivedReviews Review[]        @relation("ReviewReceiver")
+  givenReviews    Review[]        @relation("ReviewGiver")
+
+  // Personal preferences
+  preferences     PersonalPreference?
+
+  // Connection & Friend features
+  swipesGiven     Swipe[]         @relation("SwiperRelation")
+  swipesReceived  Swipe[]         @relation("SwipeeRelation")
+  friendsAsUser1  Friendship[]    @relation("User1")
+  friendsAsUser2  Friendship[]    @relation("User2")
+  friendRequests  FriendRequest[] @relation("RequestReceiver")
+  sentRequests    FriendRequest[] @relation("RequestSender")
+
+  // Messaging
+  messagesSent    Message[]       @relation("MessageSender")
+  messagesReceived Message[]      @relation("MessageReceiver")
+
+  // Hackathon & Team features
+  teamMemberships TeamMember[]
+  ownedTeams      Team[]          @relation("TeamOwner")
+  notifications   Notification[]  @relation("NotificationReceiver")
 }
 
 model Skill {
-  User_ID        Int
-  Skill_ID       Int
-  User           User     @relation(fields: [User_ID], references: [User_ID])
-  SkillType      Skill_Type @relation(fields: [Skill_ID], references: [Skill_Type_ID])
+  id          Int         @id @default(autoincrement())
+  name        String
+  category    String      // Technical, Soft Skills, etc.
+  users       UserSkill[]
+}
 
-  @@id([User_ID, Skill_ID])
+model UserSkill {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  skillId     Int
+  level       String   // Beginner, Intermediate, Expert
+  user        User     @relation(fields: [userId], references: [id])
+  skill       Skill    @relation(fields: [skillId], references: [id])
+
+  @@unique([userId, skillId])
 }
 
 model Experience {
-  Experience_ID   Int      @id @default(autoincrement())
-  Detail          String
-  Company_Name    String?
-  Start_Date      DateTime
-  End_Date        DateTime
-  Experience_Type String
-  Location        String?
-  Certification   String
-  Users           User_Experience[]
-}
-
-model User_Experience {
-  User_ID       Int
-  Experience_ID Int
-  User          User       @relation(fields: [User_ID], references: [User_ID])
-  Experience    Experience @relation(fields: [Experience_ID], references: [Experience_ID])
-
-  @@id([User_ID, Experience_ID])
-}
-
-model Notification {
-  Notification_ID  Int      @id @default(autoincrement())
-  Notification_detail String
-  Notification_Status Boolean
-  Users           User_Notification[]
-}
-
-model User_Notification {
-  User_ID       Int
-  Notification_ID Int
-  User          User        @relation(fields: [User_ID], references: [User_ID])
-  Notification  Notification @relation(fields: [Notification_ID], references: [Notification_ID])
-
-  @@id([User_ID, Notification_ID])
-}
-
-model Personal {
-  Personal_ID      Int      @id @default(autoincrement())
-  Personal_type    String
-  Personal_type_detail String?
-}
-
-model Hackathon {
-  Hackathon_ID     Int      @id @default(autoincrement())
-  Hackathon_Name   String
-  Poster           String?
-  Detail           String
-  Start_recruiting DateTime
-  End_recruiting   DateTime
-  End_event        DateTime
-  Reviews          Review[]
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  title       String
+  company     String?
+  startDate   DateTime
+  endDate     DateTime?
+  description String
+  location    String?
+  user        User     @relation(fields: [userId], references: [id])
 }
 
 model Review {
-  Review_ID        Int      @id @default(autoincrement())
-  Detail           String
-  Status_review    Boolean
-  Hackathon_ID     Int
-  Hackathon        Hackathon @relation(fields: [Hackathon_ID], references: [Hackathon_ID])
-  Teams            Team[]
+  id          Int      @id @default(autoincrement())
+  giverId     Int
+  receiverId  Int
+  rating      Int
+  comment     String?
+  createdAt   DateTime @default(now())
+  giver       User     @relation("ReviewGiver", fields: [giverId], references: [id])
+  receiver    User     @relation("ReviewReceiver", fields: [receiverId], references: [id])
+}
+
+model PersonalPreference {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @unique
+  fieldOfStudy String?  // Technology, Business, Marketing, or Ideate
+  user        User     @relation(fields: [userId], references: [id])
 }
 
 model Swipe {
-  Swipe_ID         Int      @id @default(autoincrement())
-  Swiper_ID        Int
-  Swipee_ID        Int
-  Swipe_Type       Boolean
-  Swiper           User     @relation(name: "SwiperRelation", fields: [Swiper_ID], references: [User_ID])
-  Swipee           User     @relation(name: "SwipeeRelation", fields: [Swipee_ID], references: [User_ID])
+  id          Int      @id @default(autoincrement())
+  swiperId    Int
+  swipeeId    Int
+  isLike      Boolean
+  createdAt   DateTime @default(now())
+  swiper      User     @relation("SwiperRelation", fields: [swiperId], references: [id])
+  swipee      User     @relation("SwipeeRelation", fields: [swipeeId], references: [id])
 }
 
-model Match {
-  Match_ID         Int      @id @default(autoincrement())
-  User_AID         Int
-  User_BID         Int
-  Match_Datetime   DateTime
-  UserA            User     @relation(name: "UserARelation", fields: [User_AID], references: [User_ID])
-  UserB            User     @relation(name: "UserBRelation", fields: [User_BID], references: [User_ID])
+model Friendship {
+  id          Int      @id @default(autoincrement())
+  user1Id     Int
+  user2Id     Int
+  createdAt   DateTime @default(now())
+  user1       User     @relation("User1", fields: [user1Id], references: [id])
+  user2       User     @relation("User2", fields: [user2Id], references: [id])
+
+  @@unique([user1Id, user2Id])
+}
+
+model FriendRequest {
+  id          Int      @id @default(autoincrement())
+  senderId    Int
+  receiverId  Int
+  status      String   // PENDING, ACCEPTED, REJECTED
+  createdAt   DateTime @default(now())
+  sender      User     @relation("RequestSender", fields: [senderId], references: [id])
+  receiver    User     @relation("RequestReceiver", fields: [receiverId], references: [id])
+}
+
+model Message {
+  id          Int      @id @default(autoincrement())
+  senderId    Int
+  receiverId  Int
+  content     String
+  createdAt   DateTime @default(now())
+  readAt      DateTime?
+  sender      User     @relation("MessageSender", fields: [senderId], references: [id])
+  receiver    User     @relation("MessageReceiver", fields: [receiverId], references: [id])
+}
+
+model Hackathon {
+  id              Int       @id @default(autoincrement())
+  name            String
+  description     String
+  posterUrl       String?
+  startDate       DateTime
+  endDate         DateTime
+  registrationStart DateTime
+  registrationEnd   DateTime
+  maxTeamSize     Int
+  teams           Team[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Team {
-  Team_ID          Int      @id @default(autoincrement())
-  Team_Name        String
-  User_ID          Int
-  Review_ID        Int
-  User             User     @relation(fields: [User_ID], references: [User_ID])
-  Review           Review   @relation(fields: [Review_ID], references: [Review_ID])
+  id          Int          @id @default(autoincrement())
+  name        String
+  hackathonId Int
+  ownerId     Int
+  isOpen      Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  
+  hackathon   Hackathon    @relation(fields: [hackathonId], references: [id])
+  owner       User         @relation("TeamOwner", fields: [ownerId], references: [id])
+  members     TeamMember[]
+  invitations TeamInvitation[]
+}
+
+model TeamMember {
+  id          Int      @id @default(autoincrement())
+  teamId      Int
+  userId      Int
+  joinedAt    DateTime @default(now())
+  role        String   // OWNER, MEMBER
+  
+  team        Team     @relation(fields: [teamId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@unique([teamId, userId])
+}
+
+model TeamInvitation {
+  id          Int      @id @default(autoincrement())
+  teamId      Int
+  status      String   // PENDING, ACCEPTED, REJECTED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  team        Team     @relation(fields: [teamId], references: [id])
+}
+
+model Notification {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  type        String   // TEAM_INVITATION, MESSAGE, FRIEND_REQUEST
+  content     String
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  user        User     @relation("NotificationReceiver", fields: [userId], references: [id])
 }
