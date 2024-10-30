@@ -71,9 +71,29 @@ loginRouter.post("/register", async (req, res) => {
 
 
 loginRouter.post("/login", async (req, res) => {
-    res.json({
-        message: "Login successful",
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const user = await prisma.user.findUnique({
+        where: { email }
     });
+
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+        return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    req.session.userId = user.id;
+
+    res.json(user);
 });
 
 module.exports = loginRouter;
