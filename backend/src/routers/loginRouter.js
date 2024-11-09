@@ -1,4 +1,4 @@
-const { Router } = require("express");
+/*const { Router } = require("express");
 const bcrypt = require('bcrypt');
 const prisma = require('../db/connection');
 
@@ -8,7 +8,7 @@ loginRouter.get("/me", async (req, res) => {
     try {
         const userId = req.session?.userId;
         if (!userId) {
-            return res.status(401).json({ error: 'Not authenticated' });
+            return ;
         }
 
         const user = await prisma.user.findUnique({
@@ -94,4 +94,4 @@ loginRouter.post("/login", async (req, res) => {
     res.json(user);
 });
 
-module.exports = loginRouter;
+module.exports = loginRouter;*/
