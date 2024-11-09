@@ -19,12 +19,22 @@ const Navbar = () => {
         </Link>
         
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button
-            type="button"
+          {/* Link the Register button to the /register route */}
+          <Link
+            to="/register"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Get started
-          </button>
+            Register
+          </Link>
+
+
+          {/* Link the Register button to the /register route */}
+          <Link
+            to="/login"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            login
+          </Link>
 
           <button
             onClick={() => setNavbarOpen(!navbarOpen)}
@@ -51,6 +61,9 @@ const Navbar = () => {
             </svg>
           </button>
         </div>
+
+
+        
 
         <div
           className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${navbarOpen ? '' : 'hidden'
