@@ -1,10 +1,22 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+module.exports = {
+  content: ["./src/**/*.{html,js,jsx}"],
   theme: {
-    extend: {},
+    extend: 
+    {
+      colors: 
+      {
+        'bluebg':'#3A6D8C',
+        'skybg':'#6A9AB0',
+      },
+      backgroundImage: {
+        'loginimage': "url('./img/imagelogin.png)"
+      }
+
+    },
   },
-  plugins: [],
+  plugins: [
+    require('daisyui'),
+  ],
 }
+
