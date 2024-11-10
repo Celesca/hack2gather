@@ -1,0 +1,17 @@
+/* Swipe card base style */
+.swipe-card {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+  
+  /* Animation for swiping right (like) */
+  .swipe-right {
+    transform: translateX(100vw) rotate(15deg);
+    opacity: 0;
+  }
+  
+  /* Animation for swiping left (reject) */
+  .swipe-left {
+    transform: translateX(-100vw) rotate(-15deg);
+    opacity: 0;
+  }
+  

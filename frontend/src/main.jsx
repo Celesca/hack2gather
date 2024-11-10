@@ -8,11 +8,17 @@ import './index.css'
 import App from "./App";
 import ErrorPage from "./error-page";
 import Navbar from "./components/Navbar";
+import Swipe from "./Swipe";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/Swipe",
+    element: <Swipe />,
     errorElement: <ErrorPage />,
   },
 ]);
