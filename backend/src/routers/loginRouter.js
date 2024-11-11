@@ -1,8 +1,10 @@
-/*const { Router } = require("express");
+
+const { Router } = require("express");
 const bcrypt = require('bcrypt');
 const prisma = require('../db/connection');
 
 const loginRouter = Router();
+
 
 loginRouter.get("/me", async (req, res) => {
     try {
@@ -94,4 +96,4 @@ loginRouter.post("/login", async (req, res) => {
     res.json(user);
 });
 
-module.exports = loginRouter;*/
+module.exports = loginRouter;

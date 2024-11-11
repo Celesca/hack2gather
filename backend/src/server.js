@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 
 dotenv.config()
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5173
 const cors = require('cors')
 const prisma = require('./db/connection')
 const loginRouter = require('./routers/loginRouter')
