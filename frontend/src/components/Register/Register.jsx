@@ -2,8 +2,15 @@ import React from 'react';
 import { FaUser, FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link } from 'react-router-dom';
-
+import Axios from 'axios'
+import {useState} from 'react'
 const Register = () => {
+  const [userlist,setuserlist] = useState([])
+  const getusers = () => {
+    Axios.get('http://localhost:3000/test').then((response) =>{
+      setuserlist(response.data)
+    })
+  }
   return (
     <div className='flex justify-center items-center min-h-screen bg-gradient-to-b from-bluebg to-skybg pt-20'>
       <div className="w-full max-w-2xl bg-gradient-to-b from-bluebg to-skybg text-white rounded-lg p-5 shadow-lg">
@@ -65,6 +72,21 @@ const Register = () => {
               Already have an account? 
               <Link to="/login" className="text-black font-semibold hover:underline ml-1">Go to login</Link>
             </p>
+          </div>
+          <div className='user'>
+            <button className="btn btn-primary" onClick={getusers}>show user</button>
+            {userlist.map((val,key) =>{
+              return (
+                <div className="user card">
+                  <div className="card=body text-left">
+                    <p className="card-text">firstName :{val.firstName}</p>
+                    <p className="card-text">lastName :{val.lastName}</p>
+                    <p className="card-text">description :{val.description}</p>
+                    <p className="card-text">school :{val.school}</p>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </form>
       </div>

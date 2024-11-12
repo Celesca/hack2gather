@@ -6,12 +6,12 @@ const LoginForm = () => {
   return (
     <div className="flex items-center justify-center h-screen bg-[url('/img/imagelogin.png')] to-skybg">
       <div className="bg-gradient-to-b from-bluebg to-skybg shadow-md rounded-lg p-12 w-90">
-        <form action="">
+        <form action="/login" method = "POST">
           <h1 className="text-3xl font-bold mb-6 text-center text-white">Login</h1>
           <div className="relative mb-4">
             <input
-              type="text"
-              placeholder="Username"
+              type="email"
+              placeholder="email"
               required
               className="border border-gray-300 rounded-full w-full py-2 px-3 bg-white bg-opacity-0 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white"
             />

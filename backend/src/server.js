@@ -16,6 +16,10 @@ app.use(
     origin: ['http://localhost:5173']
   })
 )
+app.get('/test', async (req, res) => {
+  const employees = await prisma.user.findMany();
+  res.send(employees);
+});
 
 app.use('/v1', loginRouter);
 

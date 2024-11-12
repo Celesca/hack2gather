@@ -31,21 +31,21 @@ loginRouter.get("/me", async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-
+        
         res.json(user);
     } catch (error) {
-        res.status(500).json({ error: 'Server error' });
+        res.status(500).json({ error: 'Server error', details: error.message });
     }
 });
-
-loginRouter.post("/register", async (req, res) => {
+/*
+loginRouter.post("/registerss", async (req, res) => {
     const { email, password, firstName, lastName, description, school, degree, fieldOfStudy } = req.body;
-
     if (!email || !password || !firstName || !lastName) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
 
     const existingUser = await prisma.user.findUnique({
+
         where: { email }
     });
 
@@ -70,7 +70,7 @@ loginRouter.post("/register", async (req, res) => {
 
     res.json(user);
 });
-
+*/
 
 loginRouter.post("/login", async (req, res) => {
     const { email, password } = req.body;
