@@ -1,17 +1,69 @@
-const Navbar = () => {
-    return (
-        <nav className="bg-gray-800 p-4">
-            <div className="container mx-auto flex justify-between items-center">
-                <div className="text-white text-lg font-bold">MyApp</div>
-                <div className="space-x-4">
-                    <a href="/" className="text-gray-300 hover:text-white">Home</a>
-                    <a href="#" className="text-gray-300 hover:text-white">About</a>
-                    <a href="#" className="text-gray-300 hover:text-white">Contact</a>
-                    <a href="/swipe" className="text-gray-300 hover:text-white">Swipe</a>
-                </div>
-            </div>
-        </nav>
-    );
-};
+import { useState } from 'react';
+
+function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <nav className="bg-gradient-to-r from-purple-700 to-blue-700 p-4 shadow-md fixed w-full z-10">
+      <div className="container mx-auto flex justify-between items-center">
+        {/* Logo */}
+        <div className="text-white text-3xl font-bold tracking-wider cursor-pointer hover:opacity-90">
+          Hack2gather
+        </div>
+
+        {/* Menu Items */}
+        <div className="hidden md:flex space-x-8">
+          <a href="/" className="text-gray-200 hover:text-white transition duration-300 font-medium">
+            Home
+          </a>
+         
+        
+          <a href="/swipe" className="text-gray-200 hover:text-white transition duration-300 font-medium">
+            Swipe
+          </a>
+        </div>
+
+        {/* Mobile Toggle Button */}
+        <button
+          className="md:hidden text-gray-200 focus:outline-none"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <svg
+            className="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden mt-4 bg-gradient-to-r from-purple-700 to-blue-700 rounded-lg p-4 shadow-lg">
+          <a href="/" className="block text-gray-200 hover:text-white text-center py-2 transition duration-300 font-semibold">
+            Home
+          </a>
+          <a href="#" className="block text-gray-200 hover:text-white text-center py-2 transition duration-300 font-semibold">
+            About
+          </a>
+          <a href="#" className="block text-gray-200 hover:text-white text-center py-2 transition duration-300 font-semibold">
+            Contact
+          </a>
+          <a href="/swipe" className="block text-gray-200 hover:text-white text-center py-2 transition duration-300 font-semibold">
+            Swipe
+          </a>
+        </div>
+      )}
+    </nav>
+  );
+}
 
 export default Navbar;

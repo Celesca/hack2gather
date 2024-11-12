@@ -9,6 +9,7 @@ import App from "./App";
 import ErrorPage from "./error-page";
 import Navbar from "./components/Navbar";
 import Swipe from "./Swipe";
+import Register from "./Register";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,16 @@ const router = createBrowserRouter([
     element: <Swipe />,
     errorElement: <ErrorPage />,
   },
+  { 
+    path: "/register",
+    element: <Register />,
+    errorElement: <ErrorPage />,  
+  },
+  { 
+    path: "/login",
+    element: <Swipe />,
+    errorElement: <ErrorPage />,  
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -29,3 +40,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
+
+export default React

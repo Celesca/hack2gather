@@ -2,6 +2,7 @@ import './App.css';
 import { useEffect } from 'react';
 import homebg from './assets/homebg.jpg';
 import { TypeAnimation } from 'react-type-animation';
+import { Link } from 'react-router-dom';
 
 function App() {
   useEffect(() => {
@@ -30,7 +31,11 @@ function App() {
             repeat={Infinity}
             className="text-5xl font-bold text-blue-900"
           />
-          <button className="bg-yellow-200 text-blue-900 font-bold py-2 px-8 mt-6 rounded shadow-md">Sign Up</button>
+           <Link to="/register">
+        <button className="bg-yellow-200 text-blue-900 font-bold py-2 px-8 mt-6 rounded shadow-md">
+          Sign Up
+        </button>
+      </Link>
         </main>
       </div>
     </>
