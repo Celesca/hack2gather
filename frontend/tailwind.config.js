@@ -10,8 +10,12 @@ export default {
         bluee: '#3A6D8C',
         lightbluee: '#6A9AB0',
         yelloww: '#EAD8B1',
+        bluebg:'#3A6D8C',
+        skybg:'#6A9AB0',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('daisyui'),
+  ],
 }
