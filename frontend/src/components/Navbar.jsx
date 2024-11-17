@@ -8,6 +8,9 @@ const Navbar = () => {
                     <a href="#" className="text-gray-300 hover:text-white">About</a>
                     <a href="#" className="text-gray-300 hover:text-white">Contact</a>
                 </div>
+                <a href="/profile">
+                    <img className="w-10 h-10 rounded-full" src="path/to/profile-image.jpg" alt="Profile" />
+                </a>
             </div>
         </nav>
     );
