@@ -11,10 +11,15 @@ import Navbar from "./components/Navbar";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <App />,
     errorElement: <ErrorPage />,
   },
+  {
+    path: "/profile",
+    element: <Profile />,
+    errorElement: <ErrorPage />,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
