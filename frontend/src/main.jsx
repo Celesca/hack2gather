@@ -9,6 +9,11 @@ import App from "./App";
 import ErrorPage from "./error-page";
 import Navbar from "./components/Navbar";
 import Swipe from "./Swipe";
+<<<<<<< HEAD
+=======
+import Homepage from "./Homepage";
+import LoginForm from "./LoginForm";
+>>>>>>> 87495c25203e6f15b7d85be02b678782c7c5cf01
 import Register from "./Register";
 
 const router = createBrowserRouter([
@@ -22,6 +27,7 @@ const router = createBrowserRouter([
     element: <Swipe />,
     errorElement: <ErrorPage />,
   },
+<<<<<<< HEAD
   { 
     path: "/register",
     element: <Register />,
@@ -31,6 +37,22 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Swipe />,
     errorElement: <ErrorPage />,  
+=======
+  {
+    path: "/Homepage",
+    element: <Homepage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/Login",
+    element: <LoginForm />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/Register",
+    element: <Register />,
+    errorElement: <ErrorPage />,
+>>>>>>> 87495c25203e6f15b7d85be02b678782c7c5cf01
   }
 ]);
 
