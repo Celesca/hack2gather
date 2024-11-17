@@ -1,5 +1,3 @@
-import Navbar from "./components/Navbar";
-
 const Profile = () => {
   // Example user data (can be fetched dynamically via API)
   const user = {
@@ -11,7 +9,6 @@ const Profile = () => {
 
   return (
     <>
-      <Navbar />
       <div className="text-center p-5 font-sans bg-gray-100 rounded-lg max-w-md mx-auto mt-12 shadow-md">
         <img src={user.profileImage} alt={`${user.name}'s Profile`} className="w-36 h-36 rounded-full mb-5" />
         <h1 className="text-2xl font-bold">{user.name}</h1>
