@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import './index.css'
 import App from "./App";
+import Profile from "./profile";
 import ErrorPage from "./error-page";
 import Navbar from "./components/Navbar";
 
