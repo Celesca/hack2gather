@@ -2,10 +2,11 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 async function main() {
-  const alice = await prisma.user.upsert({
-    where: { email: 'alice@prisma.io' },
+  const user1 = await prisma.user.upsert({
+    where: { email: 'user1@example.com' },
     update: {},
     create: {
+<<<<<<< HEAD
       email: 'alice@prisma.io',
       name: 'Alice',
       posts: {
@@ -16,32 +17,39 @@ async function main() {
         }
       }
     }
+=======
+      First_name: 'John',
+      Last_name: 'Doe',
+      DOB: new Date('1990-01-01'),
+      Email: 'user1@example.com',
+      Password: 'securepassword123',
+      Description: 'A passionate software developer.',
+      School_University: 'MIT',
+      Education: 'Bachelor in Computer Science',
+      Rating: 5
+    },
+>>>>>>> b31a6d9c71cce04fc0a20693e939910a9022328f
   })
 
-  const bob = await prisma.user.upsert({
-    where: { email: 'bob@prisma.io' },
+  const user2 = await prisma.user.upsert({
+    where: { email: 'user2@example.com' },
     update: {},
     create: {
-      email: 'bob@prisma.io',
-      name: 'Bob',
-      posts: {
-        create: [
-          {
-            title: 'Follow Prisma on Twitter',
-            content: 'https://twitter.com/prisma',
-            published: true
-          },
-          {
-            title: 'Follow Nexus on Twitter',
-            content: 'https://twitter.com/nexusgql',
-            published: true
-          }
-        ]
-      }
-    }
+      First_name: 'Jane',
+      Last_name: 'Doe',
+      DOB: new Date('1992-02-02'),
+      Email: 'user2@example.com',
+      Password: 'anothersecurepassword456',
+      Description: 'An experienced project manager.',
+      School_University: 'Harvard',
+      Education: 'Master in Business Administration',
+      Rating: 4
+    },
   })
-  console.log({ alice, bob })
+
+  console.log({ user1, user2 })
 }
+
 main()
   .then(async () => {
     await prisma.$disconnect()
