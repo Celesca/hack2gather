@@ -11,7 +11,7 @@ const Register = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Form Fields */}
-            {['First Name', 'Last Name', 'Enter your email', 'School', 'Degree', 'Education Level', 'Skills', 'Experience'].map((placeholder, index) => (
+            {['First Name', 'Last Name', 'Enter your email', 'School','Department', 'Degree', 'Education Level', 'Skills', 'Experience'].map((placeholder, index) => (
               <div className="relative" key={index}>
                 <input 
                   type={placeholder === 'Enter your email' ? 'email' : 'text'}
