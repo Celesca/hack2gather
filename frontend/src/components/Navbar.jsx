@@ -46,6 +46,12 @@ function Navbar() {
             <a href="/profile" className="text-white hover:text-purple-200 transition duration-300 font-medium">
               โปรไฟล์
             </a>
+            <a href="/EventDetail" className="text-white hover:text-purple-200 transition duration-300 font-medium">
+              กิจกกรรม hackathon
+            </a>
+            <a href="/Personal" className="text-white hover:text-purple-200 transition duration-300 font-medium">
+              personal Type
+            </a>
             <a href="/swipe" className="text-white hover:text-purple-200 transition duration-300 font-medium">
               จับคู่
             </a>
@@ -93,6 +99,9 @@ function Navbar() {
               </a>
               <a href="/profile" className="text-white hover:bg-white/10 px-4 py-2 rounded-lg transition duration-300">
                 โปรไฟล์
+              </a>
+              <a href="/EventDetail" className="text-white hover:bg-white/10 px-4 py-2 rounded-lg transition duration-300">
+              กิจกกรรม hackathon
               </a>
               <a href="/swipe" className="text-white hover:bg-white/10 px-4 py-2 rounded-lg transition duration-300">
                 จับคู่

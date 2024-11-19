@@ -1,9 +1,7 @@
-import Navbar from './components/Navbar'
 
 const Profile = () => {
     return (
       <div className="h-screen flex items-center justify-center bg-gray-100">
-        <Navbar />
 
         <div className="mx-auto p-6 space-y-6 bg-white rounded-lg shadow-md">
           {/* Profile Header Section */}

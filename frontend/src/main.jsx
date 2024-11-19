@@ -13,6 +13,7 @@ import Register from "./Register";
 import LoginForm from "./LoginForm";
 import Profile from "./profile";
 import EventDetail from './EventDetail'
+import Personal from "./personal";
 
 const router = createBrowserRouter([
   {
@@ -41,8 +42,13 @@ const router = createBrowserRouter([
   errorElement: <ErrorPage />
   },
   {
-  path: "/eventdetail",
+  path: "/EventDetail",
   element: <EventDetail />,
+  errorElement: <ErrorPage />
+  },
+  {
+  path: "/Personal",
+  element: <Personal />,
   errorElement: <ErrorPage />
   }
 ]);
