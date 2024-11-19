@@ -1,9 +1,97 @@
+import  { useState } from 'react';
+import { FaUser, FaLock  } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import Axios from 'axios';
 
 const Profile = () => {
-    return (
-      <div className="h-screen flex items-center justify-center bg-gray-100">
+  const [company, setCompany] = useState('');
+  const [description, setDescription] = useState('');
+  const [endDate, setEnddate] = useState('');
+  const [location, setLocation] = useState('');
+  const [startDate, setStartdate] = useState(0);
+  const [title, setTitle] = useState('');
 
-        <div className="mx-auto p-6 space-y-6 bg-white rounded-lg shadow-md">
+  const [Skilllist, setSkilllist] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [school, setSchool] = useState('');
+  const [degree, setDegree] = useState(0);
+  const [password, setPassword] = useState('');
+
+  const [userlist, setUserlist] = useState([]);
+
+
+  // const getSkill = () => {
+  //   Axios.get('http://localhost:3000/test').then((response) => {
+  //     setSkilllist(response.data);
+  //   });
+  // };
+
+
+  const addSkill = () => {
+    Axios.post('http://localhost:3000/profile', {
+      company: company,
+      description: description,
+      endDate: endDate,
+      location: location,
+      startDate: startDate,
+      title: title,
+    }).then(() => {
+      setSkilllist([
+        ...Skilllist,
+        {
+          company: company,
+          description: description,
+          endDate: endDate,
+          location: location,
+          startDate: startDate,
+          title: title,
+        },
+      ]);
+      setIsModalOpen(false);
+    });
+  };
+
+  
+  // const getUsers = () => {
+  //   Axios.get('http://localhost:3000/test').then((response) => {
+  //     setUserlist(response.data);
+  //   });
+  // };
+
+  
+  const addUsers = () => {
+    Axios.post('http://localhost:3000/profile', {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      school: school,
+      degree: degree,
+      description: description,
+      password: password,
+    }).then(() => {
+      setUserlist([
+        ...userlist,
+        {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          school: school,
+          degree: degree,
+          description: description,
+          password: password,
+        },
+      ]);
+    });
+  };
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-bluebg to-skybg flex items-center justify-center p-4">
+
+        <div className="p-10 space-y-10 bg-white rounded-lg shadow-md max-w-full max-h-screen">
           {/* Profile Header Section */}
           <div className="flex items-start gap-6">
             {/* Profile Image */}
@@ -46,14 +134,208 @@ const Profile = () => {
                     <span className="ml-2 text-gray-600">4.0</span>
                   </div>
                 </div>
-                <button className="px-4 py-2 bg-gray-200 rounded-lg text-sm">
-                  แก้ไขโปรไฟล์
-                </button>
+                <div className="flex flex-col gap-2">
+                    <button onClick={() => setIsEditProfileModalOpen(true)}
+                        className="px-4 py-2 bg-gray-200 rounded-lg text-sm">
+                        แก้ไขโปรไฟล์
+                    </button>
+                    {/* Popup สำหรับแก้ไขโปรไฟล์ */}
+                    {isEditProfileModalOpen && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                            <div className="w-full max-w-2xl bg-gradient-to-b from-bluebg to-skybg text-white rounded-lg p-5 shadow-lg">
+                          <form action=''>
+                            <h1 className="text-4xl font-bold text-center mb-6">แก้ไขโปรไฟล์</h1>
+                  
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="relative">
+                                <input 
+                                  type="text" 
+                                  placeholder="First Name" 
+                                  required 
+                                  className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                  onChange={(event) => setFirstName(event.target.value)}
+                                />
+                                <FaUser className="absolute right-4 top-3 text-white" />
+                              </div>
+                              <div className="relative">
+                                <input 
+                                  type="text" 
+                                  placeholder="Last Name" 
+                                  required 
+                                  className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                  onChange={(event) => setLastName(event.target.value)}
+                                />
+                                <FaUser className="absolute right-4 top-3 text-white" />
+                              </div>
+                              <div className="relative">
+                                <input 
+                                  type="email" 
+                                  placeholder="Enter your email" 
+                                  required 
+                                  className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                  onChange={(event) => setEmail(event.target.value)}
+                                />
+                                <MdEmail className="absolute right-4 top-3 text-white" />
+                              </div>
+                              <div className="relative">
+                                <input 
+                                  type="text" 
+                                  placeholder="School" 
+                                  required 
+                                  className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                  onChange={(event) => setSchool(event.target.value)}
+                                />
+                                <FaUser className="absolute right-4 top-3 text-white" />
+                              </div>
+                              <div className="relative">
+                                <input 
+                                  type="number" 
+                                  placeholder="Degree" 
+                                  required 
+                                  className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                  onChange={(event) => setDegree(event.target.value)}
+                                />
+                                <FaUser className="absolute right-4 top-3 text-white" />
+                              </div>
+                  
+                              <div className="relative col-span-2">
+                                <textarea 
+                                  placeholder="Short Description" 
+                                  required 
+                                  className="w-full h-32 px-4 py-2 bg-transparent border border-white rounded-lg text-white placeholder-white focus:outline-none focus:border-white resize-none"
+                                  onChange={(event) => setDescription(event.target.value)}
+                                />
+                              </div>
+                            </div>
+                  
+                            <div className="relative mt-6 mb-6">
+                              <input 
+                                type="password" 
+                                placeholder="Password" 
+                                required 
+                                className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                onChange={(event) => setPassword(event.target.value)}
+                              />
+                              <FaLock className="absolute right-4 top-3 text-white" />
+                            </div>
+                  
+                            <div className="flex justify-between mt-6">
+                                    <button
+                                        onClick={addUsers}
+                                        className="w-1/3 h-12 bg-white text-black font-bold rounded-full shadow-md hover:bg-gray-200 transition duration-300"
+                                    >
+                                        Save
+                                    </button>
+                                    <button
+                                        onClick={() => setIsEditProfileModalOpen(false)}
+                                        className="w-1/3 h-12 bg-red-500 text-white font-bold rounded-full shadow-md hover:bg-red-600 transition duration-300"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                  
+                          </form>
+                        </div>
+                      </div>
+                    )}
+                  
+
+                    <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="px-4 py-2 bg-gray-200 rounded-lg text-sm">
+                        ADD SKILL
+                    </button>
+                    {isModalOpen && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                            <div className="w-full max-w-2xl bg-gradient-to-b from-bluebg to-skybg text-white rounded-lg p-5 shadow-lg">
+                                <h1 className="text-4xl font-bold text-center mb-6">Skill</h1>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="Company"
+                                            required
+                                            className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                            onChange={(event) => setCompany(event.target.value)}
+                                        />
+                                        <FaUser className="absolute right-4 top-3 text-white" />
+                                    </div>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="Description"
+                                            required
+                                            className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                            onChange={(event) => setDescription(event.target.value)}
+                                        />
+                                        <FaUser className="absolute right-4 top-3 text-white" />
+                                    </div>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="End Date"
+                                            required
+                                            className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                            onChange={(event) => setEnddate(event.target.value)}
+                                        />
+                                        <FaUser className="absolute right-4 top-3 text-white" />
+                                    </div>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="Location"
+                                            required
+                                            className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                            onChange={(event) => setLocation(event.target.value)}
+                                        />
+                                        <FaUser className="absolute right-4 top-3 text-white" />
+                                    </div>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="Start Date"
+                                            required
+                                            className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                            onChange={(event) => setStartdate(event.target.value)}
+                                        />
+                                        <FaUser className="absolute right-4 top-3 text-white" />
+                                    </div>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="Title"
+                                            required
+                                            className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                            onChange={(event) => setTitle(event.target.value)}
+                                        />
+                                        <FaUser className="absolute right-4 top-3 text-white" />
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-between mt-6">
+                                    <button
+                                        onClick={addSkill}
+                                        className="w-1/3 h-12 bg-white text-black font-bold rounded-full shadow-md hover:bg-gray-200 transition duration-300"
+                                    >
+                                        Save
+                                    </button>
+                                    <button
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="w-1/3 h-12 bg-red-500 text-white font-bold rounded-full shadow-md hover:bg-red-600 transition duration-300"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    </div>
+                
               </div>
   
               <div className="mt-4">
                 <h2 className="font-medium">แนะนำตัว</h2>
-                <p className="mt-2 text-gray-600 text-sm">
+                <p className="mt-2 text-gray-600 text-sm max-w-screen-lg">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                   eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                   enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -68,7 +350,7 @@ const Profile = () => {
   
           {/* Past Events Section */}
           <div className="mt-8">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center rounded-lg p-4 shadow-sm justify-between">
               <h2 className="text-lg font-medium">Past Event</h2>
               <button className="p-2">
                 <svg
@@ -87,7 +369,7 @@ const Profile = () => {
               </button>
             </div>
   
-            <div className="mt-4 bg-white rounded-lg p-4 shadow-sm">
+            <div className="mt-4 bg-white">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <h3 className="font-medium">Hackathon999</h3>
@@ -138,4 +420,4 @@ const Profile = () => {
   };
   
   export default Profile;
-  
+ 
