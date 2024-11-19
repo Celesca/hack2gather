@@ -12,6 +12,7 @@ import Swipe from "./Swipe";
 import Register from "./Register";
 import LoginForm from "./LoginForm";
 import Profile from "./profile";
+import EventDetail from './EventDetail'
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,11 @@ const router = createBrowserRouter([
   {
   path: "/profile",
   element: <Profile />,
+  errorElement: <ErrorPage />
+  },
+  {
+  path: "/eventdetail",
+  element: <EventDetail />,
   errorElement: <ErrorPage />
   }
 ]);
