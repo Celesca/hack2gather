@@ -89,9 +89,9 @@ const Profile = () => {
     });
   };
     return (
-      <div className="min-h-screen bg-gradient-to-b from-bluebg to-skybg flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-b from-bluebg to-skybg items-center justify-center p-4">
 
-        <div className="p-10 space-y-10 bg-white rounded-lg shadow-md max-w-full max-h-screen">
+        <div className="mt-20 p-10 space-y-10 bg-white rounded-lg shadow-md max-w-full max-h-screen">
           {/* Profile Header Section */}
           <div className="flex items-start gap-6">
             {/* Profile Image */}
@@ -137,14 +137,14 @@ const Profile = () => {
                 <div className="flex flex-col gap-2">
                     <button onClick={() => setIsEditProfileModalOpen(true)}
                         className="px-4 py-2 bg-gray-200 rounded-lg text-sm">
-                        แก้ไขโปรไฟล์
+                        EDIT PROFILE
                     </button>
                     {/* Popup สำหรับแก้ไขโปรไฟล์ */}
                     {isEditProfileModalOpen && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                             <div className="w-full max-w-2xl bg-gradient-to-b from-bluebg to-skybg text-white rounded-lg p-5 shadow-lg">
                           <form action=''>
-                            <h1 className="text-4xl font-bold text-center mb-6">แก้ไขโปรไฟล์</h1>
+                            <h1 className="text-4xl font-bold text-center mb-6">Edit profile</h1>
                   
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div className="relative">
@@ -248,7 +248,7 @@ const Profile = () => {
                     {isModalOpen && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                             <div className="w-full max-w-2xl bg-gradient-to-b from-bluebg to-skybg text-white rounded-lg p-5 shadow-lg">
-                                <h1 className="text-4xl font-bold text-center mb-6">Skill</h1>
+                                <h1 className="text-4xl font-bold text-center mb-6">Add skill</h1>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="relative">
                                         <input
@@ -260,26 +260,7 @@ const Profile = () => {
                                         />
                                         <FaUser className="absolute right-4 top-3 text-white" />
                                     </div>
-                                    <div className="relative">
-                                        <input
-                                            type="text"
-                                            placeholder="Description"
-                                            required
-                                            className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
-                                            onChange={(event) => setDescription(event.target.value)}
-                                        />
-                                        <FaUser className="absolute right-4 top-3 text-white" />
-                                    </div>
-                                    <div className="relative">
-                                        <input
-                                            type="text"
-                                            placeholder="End Date"
-                                            required
-                                            className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
-                                            onChange={(event) => setEnddate(event.target.value)}
-                                        />
-                                        <FaUser className="absolute right-4 top-3 text-white" />
-                                    </div>
+
                                     <div className="relative">
                                         <input
                                             type="text"
@@ -290,6 +271,7 @@ const Profile = () => {
                                         />
                                         <FaUser className="absolute right-4 top-3 text-white" />
                                     </div>
+
                                     <div className="relative">
                                         <input
                                             type="text"
@@ -300,6 +282,18 @@ const Profile = () => {
                                         />
                                         <FaUser className="absolute right-4 top-3 text-white" />
                                     </div>
+
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="End Date"
+                                            required
+                                            className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                                            onChange={(event) => setEnddate(event.target.value)}
+                                        />
+                                        <FaUser className="absolute right-4 top-3 text-white" />
+                                    </div>
+                                    
                                     <div className="relative">
                                         <input
                                             type="text"
@@ -307,6 +301,15 @@ const Profile = () => {
                                             required
                                             className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
                                             onChange={(event) => setTitle(event.target.value)}
+                                        />
+                                        <FaUser className="absolute right-4 top-3 text-white" />
+                                    </div>
+                                    <div className="relative col-span-2">
+                                        <textarea 
+                                          placeholder="Short Description" 
+                                          required 
+                                          className="w-full h-32 px-4 py-2 bg-transparent border border-white rounded-lg text-white placeholder-white focus:outline-none focus:border-white resize-none"
+                                          onChange={(event) => setDescription(event.target.value)}
                                         />
                                         <FaUser className="absolute right-4 top-3 text-white" />
                                     </div>
@@ -369,7 +372,7 @@ const Profile = () => {
               </button>
             </div>
   
-            <div className="mt-4 bg-white">
+            <div className="mt-10 bg-white">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <h3 className="font-medium">Hackathon999</h3>
