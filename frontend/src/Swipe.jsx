@@ -119,7 +119,7 @@ const Swipe = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
-      <div className="flex flex-col items-center w-full max-w-4xl p-4">
+      <div className="mt-20 flex flex-col items-center w-full max-w-4xl p-4">
         {currentProfile ? (
           <>
             <div 

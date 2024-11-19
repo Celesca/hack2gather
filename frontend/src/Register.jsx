@@ -14,13 +14,13 @@ const Register = () => {
   return (
         <div className="flex items-center justify-center min-h-screen bg-cover bg-center"
          style={{ backgroundImage: `url(${imagelogin})` }}>      
-         <div className="w-full max-w-2xl bg-gradient-to-b from-bluebg to-skybg text-white rounded-lg p-5 shadow-lg">
+         <div className="mt-20 w-full max-w-2xl bg-gradient-to-b from-bluebg to-skybg text-white rounded-lg p-5 shadow-lg">
         <form>
           <h1 className="text-4xl font-bold text-center mb-6">Register</h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Form Fields */}
-            {['First Name', 'Last Name', 'Enter your email', 'School', 'Degree', 'Education Level', 'Skills', 'Experience'].map((placeholder, index) => (
+            {['First Name', 'Last Name', 'Enter your email' ,'School', 'Degree', 'Education Level', 'Skills', 'Experience', 'rating'].map((placeholder, index) => (
               <div className="relative" key={index}>
                 <input 
                   type={placeholder === 'Enter your email' ? 'email' : 'text'}

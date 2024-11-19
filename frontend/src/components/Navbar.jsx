@@ -20,6 +20,14 @@ function Navbar() {
           <a href="/register" className="text-gray-200 hover:text-white transition duration-300 font-medium">
             Register
           </a>
+
+          <a href="/login" className="text-gray-200 hover:text-white transition duration-300 font-medium">
+            Login
+          </a>
+
+          <a href="/profile" className="text-gray-200 hover:text-white transition duration-300 font-medium">
+          Profile
+          </a>
          
         
           <a href="/swipe" className="text-gray-200 hover:text-white transition duration-300 font-medium">
