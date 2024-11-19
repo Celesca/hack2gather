@@ -1,12 +1,13 @@
 const express = require('express')
 const dotenv = require('dotenv')
-
+const bcrypt = require('bcryptjs');
 dotenv.config()
 
 const port = process.env.PORT || 5173
 const cors = require('cors')
 const prisma = require('./db/connection')
 const loginRouter = require('./routers/loginRouter')
+
 
 const app = express()
 app.use(express.json())
@@ -16,49 +17,45 @@ app.use(
     origin: ['http://localhost:5173']
   })
 )
-app.get('/register', async (req, res) => {
-  const { firstName, lastName, email, school, degree, /*EducationLevel, skills, experience, dob,*/ description, password /*, confirmPassword */} = req.body;
+app.post('/register', async (req, res) => {
+  const { firstName, lastName, email, school, degree,education_level,rating, description, password,confirm_password } = req.body;
 
-  // if (!firstName || !lastName || !email || !School || !Degree /*|| !EducationLevel || !skills || !experience || !dob*/ || !password  /*!confirmPassword*/) {
-  //     return res.status(400).json({ error: 'All required fields must be filled' });
-  // }
-  
-
-  /*if (password !== confirmPassword) {
-      return res.status(400).json({ error: 'Passwords do not match' });
-  }*/
-
+  if (!firstName || !lastName || !email || !school || !degree || !education_level || !rating || !description || !password || !confirm_password) {
+    return res.status(400).json({ error: 'All required fields must be filled' });
+  }
+  // if (password !== confirm_password) {
+  //          return res.status(400).json({ error: 'Passwords do not match' });
+  //      }
   try {
-      const existingUser = await prisma.user.findUnique({ where: { email } });
-      if (existingUser) {
-          return res.status(400).json({ error: 'User already exists' });
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ error: 'User already exists' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await prisma.user.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        school,
+        degree,
+        education_level,
+        rating,
+        description,
+        password: hashedPassword,
+        confirm_password
       }
+    });
 
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      await prisma.user.create({
-          data: {
-              firstName,
-              lastName,
-              email,
-              school,
-              degree,
-              /*EducationLevel,
-              skills,
-              experience,
-              dob: dob ? new Date(dob) : null,
-              */
-              description,
-              password: hashedPassword
-          }
-      });
-
-      
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-      console.error("Error registering :", error);
-      res.status(500).json({ error: 'Error saving user' });
+    console.error("Error registering :", error);
+    res.status(500).json({ error: 'Error saving user' });
   }
 });
+
 
 app.get('/test', async (req, res) => {
   const employees = await prisma.user.findMany();

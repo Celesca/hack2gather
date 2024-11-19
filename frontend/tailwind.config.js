@@ -6,8 +6,9 @@ module.exports = {
     {
       colors: 
       {
-        'bluebg':'#3A6D8C',
-        'skybg':'#6A9AB0',
+        bluebg:'#3A6D8C',
+        skybg:'#6A9AB0',
+        creambg:'#EAD8B1',
       },
       backgroundImage: {
         'loginimage': "url('./img/imagelogin.png)"

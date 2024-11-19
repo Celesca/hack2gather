@@ -1,6 +1,6 @@
 const { Router } = require("express");
-const bcrypt = require('bcryptjs');
-const prisma = require('../db/connection');
+//const bcrypt = require('bcryptjs');
+//const prisma = require('../db/connection');
 
 const registerRouter = Router();
 

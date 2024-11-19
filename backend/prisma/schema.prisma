@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,196 +7,208 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id              Int       @id @default(autoincrement())
-  email           String    @unique
-  password        String
-  firstName       String
-  lastName        String
-  description     String?
-  school          String?
-  degree          String?
-  fieldOfStudy    String?   // Technology, Business, Marketing, or Ideate
-  rating          Float     @default(0)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-
-  // Profile relationships
-  skills          UserSkill[]
-  experiences     Experience[]
-  receivedReviews Review[]        @relation("ReviewReceiver")
-  givenReviews    Review[]        @relation("ReviewGiver")
-
-  // Personal preferences
-  preferences     PersonalPreference?
-
-  // Connection & Friend features
-  swipesGiven     Swipe[]         @relation("SwiperRelation")
-  swipesReceived  Swipe[]         @relation("SwipeeRelation")
-  friendsAsUser1  Friendship[]    @relation("User1")
-  friendsAsUser2  Friendship[]    @relation("User2")
-  friendRequests  FriendRequest[] @relation("RequestReceiver")
-  sentRequests    FriendRequest[] @relation("RequestSender")
-
-  // Messaging
-  messagesSent    Message[]       @relation("MessageSender")
-  messagesReceived Message[]      @relation("MessageReceiver")
-
-  // Hackathon & Team features
-  teamMemberships TeamMember[]
-  ownedTeams      Team[]          @relation("TeamOwner")
-  notifications   Notification[]  @relation("NotificationReceiver")
-}
-
-model Skill {
-  id          Int         @id @default(autoincrement())
-  name        String
-  category    String      // Technical, Soft Skills, etc.
-  users       UserSkill[]
-}
-
-model UserSkill {
-  id          Int      @id @default(autoincrement())
-  userId      Int
-  skillId     Int
-  level       String   // Beginner, Intermediate, Expert
-  user        User     @relation(fields: [userId], references: [id])
-  skill       Skill    @relation(fields: [skillId], references: [id])
-
-  @@unique([userId, skillId])
-}
-
-model Experience {
-  id          Int      @id @default(autoincrement())
-  userId      Int
-  title       String
+model experience {
   company     String?
-  startDate   DateTime
-  endDate     DateTime?
   description String
+  endDate     DateTime?
+  id          Int       @id @default(autoincrement())
   location    String?
-  user        User     @relation(fields: [userId], references: [id])
+  startDate   DateTime
+  title       String
+  userId      Int
+  user        user      @relation(fields: [userId], references: [id], map: "Experience_userId_fkey")
+
+  @@index([userId], map: "Experience_userId_fkey")
 }
 
-model Review {
-  id          Int      @id @default(autoincrement())
-  giverId     Int
-  receiverId  Int
-  rating      Int
-  comment     String?
-  createdAt   DateTime @default(now())
-  giver       User     @relation("ReviewGiver", fields: [giverId], references: [id])
-  receiver    User     @relation("ReviewReceiver", fields: [receiverId], references: [id])
+model friendrequest {
+  id                                  Int      @id @default(autoincrement())
+  senderId                            Int
+  receiverId                          Int
+  status                              String
+  createdAt                           DateTime @default(now())
+  user_friendrequest_receiverIdTouser user     @relation("friendrequest_receiverIdTouser", fields: [receiverId], references: [id], map: "FriendRequest_receiverId_fkey")
+  user_friendrequest_senderIdTouser   user     @relation("friendrequest_senderIdTouser", fields: [senderId], references: [id], map: "FriendRequest_senderId_fkey")
+
+  @@index([receiverId], map: "FriendRequest_receiverId_fkey")
+  @@index([senderId], map: "FriendRequest_senderId_fkey")
 }
 
-model PersonalPreference {
-  id          Int      @id @default(autoincrement())
-  userId      Int      @unique
-  fieldOfStudy String?  // Technology, Business, Marketing, or Ideate
-  user        User     @relation(fields: [userId], references: [id])
+model friendship {
+  id                            Int      @id @default(autoincrement())
+  user1Id                       Int
+  user2Id                       Int
+  createdAt                     DateTime @default(now())
+  user_friendship_user1IdTouser user     @relation("friendship_user1IdTouser", fields: [user1Id], references: [id], map: "Friendship_user1Id_fkey")
+  user_friendship_user2IdTouser user     @relation("friendship_user2IdTouser", fields: [user2Id], references: [id], map: "Friendship_user2Id_fkey")
+
+  @@unique([user1Id, user2Id], map: "Friendship_user1Id_user2Id_key")
+  @@index([user2Id], map: "Friendship_user2Id_fkey")
 }
 
-model Swipe {
-  id          Int      @id @default(autoincrement())
-  swiperId    Int
-  swipeeId    Int
-  isLike      Boolean
-  createdAt   DateTime @default(now())
-  swiper      User     @relation("SwiperRelation", fields: [swiperId], references: [id])
-  swipee      User     @relation("SwipeeRelation", fields: [swipeeId], references: [id])
-}
-
-model Friendship {
-  id          Int      @id @default(autoincrement())
-  user1Id     Int
-  user2Id     Int
-  createdAt   DateTime @default(now())
-  user1       User     @relation("User1", fields: [user1Id], references: [id])
-  user2       User     @relation("User2", fields: [user2Id], references: [id])
-
-  @@unique([user1Id, user2Id])
-}
-
-model FriendRequest {
-  id          Int      @id @default(autoincrement())
-  senderId    Int
-  receiverId  Int
-  status      String   // PENDING, ACCEPTED, REJECTED
-  createdAt   DateTime @default(now())
-  sender      User     @relation("RequestSender", fields: [senderId], references: [id])
-  receiver    User     @relation("RequestReceiver", fields: [receiverId], references: [id])
-}
-
-model Message {
-  id          Int      @id @default(autoincrement())
-  senderId    Int
-  receiverId  Int
-  content     String
-  createdAt   DateTime @default(now())
-  readAt      DateTime?
-  sender      User     @relation("MessageSender", fields: [senderId], references: [id])
-  receiver    User     @relation("MessageReceiver", fields: [receiverId], references: [id])
-}
-
-model Hackathon {
-  id              Int       @id @default(autoincrement())
-  name            String
-  description     String
-  posterUrl       String?
-  startDate       DateTime
-  endDate         DateTime
-  registrationStart DateTime
+model hackathon {
+  createdAt         DateTime @default(now())
+  description       String
+  endDate           DateTime
+  id                Int      @id @default(autoincrement())
+  maxTeamSize       Int
+  name              String
+  posterUrl         String?
   registrationEnd   DateTime
-  maxTeamSize     Int
-  teams           Team[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  registrationStart DateTime
+  startDate         DateTime
+  updatedAt         DateTime
+  team              team[]
 }
 
-model Team {
-  id          Int          @id @default(autoincrement())
-  name        String
-  hackathonId Int
-  ownerId     Int
-  isOpen      Boolean      @default(true)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  
-  hackathon   Hackathon    @relation(fields: [hackathonId], references: [id])
-  owner       User         @relation("TeamOwner", fields: [ownerId], references: [id])
-  members     TeamMember[]
-  invitations TeamInvitation[]
+model message {
+  id                            Int       @id @default(autoincrement())
+  senderId                      Int
+  receiverId                    Int
+  content                       String
+  createdAt                     DateTime  @default(now())
+  readAt                        DateTime?
+  user_message_receiverIdTouser user      @relation("message_receiverIdTouser", fields: [receiverId], references: [id], map: "Message_receiverId_fkey")
+  user_message_senderIdTouser   user      @relation("message_senderIdTouser", fields: [senderId], references: [id], map: "Message_senderId_fkey")
+
+  @@index([receiverId], map: "Message_receiverId_fkey")
+  @@index([senderId], map: "Message_senderId_fkey")
 }
 
-model TeamMember {
-  id          Int      @id @default(autoincrement())
-  teamId      Int
-  userId      Int
-  joinedAt    DateTime @default(now())
-  role        String   // OWNER, MEMBER
-  
-  team        Team     @relation(fields: [teamId], references: [id])
-  user        User     @relation(fields: [userId], references: [id])
+model notification {
+  content   String
+  createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  isRead    Boolean  @default(false)
+  type      String
+  userId    Int
+  user      user     @relation(fields: [userId], references: [id], map: "Notification_userId_fkey")
 
-  @@unique([teamId, userId])
+  @@index([userId], map: "Notification_userId_fkey")
 }
 
-model TeamInvitation {
-  id          Int      @id @default(autoincrement())
-  teamId      Int
-  status      String   // PENDING, ACCEPTED, REJECTED
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  team        Team     @relation(fields: [teamId], references: [id])
+model personalpreference {
+  id           Int     @id @default(autoincrement())
+  userId       Int     @unique(map: "PersonalPreference_userId_key")
+  fieldOfStudy String?
+  user         user    @relation(fields: [userId], references: [id], map: "PersonalPreference_userId_fkey")
 }
 
-model Notification {
-  id          Int      @id @default(autoincrement())
-  userId      Int
-  type        String   // TEAM_INVITATION, MESSAGE, FRIEND_REQUEST
-  content     String
-  isRead      Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  user        User     @relation("NotificationReceiver", fields: [userId], references: [id])
+model review {
+  comment                      String?
+  createdAt                    DateTime @default(now())
+  giverId                      Int
+  id                           Int      @id @default(autoincrement())
+  rating                       Int
+  receiverId                   Int
+  user_review_giverIdTouser    user     @relation("review_giverIdTouser", fields: [giverId], references: [id], map: "Review_giverId_fkey")
+  user_review_receiverIdTouser user     @relation("review_receiverIdTouser", fields: [receiverId], references: [id], map: "Review_receiverId_fkey")
+
+  @@index([giverId], map: "Review_giverId_fkey")
+  @@index([receiverId], map: "Review_receiverId_fkey")
+}
+
+model skill {
+  category  String
+  id        Int         @id @default(autoincrement())
+  name      String
+  userskill userskill[]
+}
+
+model swipe {
+  createdAt                 DateTime @default(now())
+  id                        Int      @id @default(autoincrement())
+  isLike                    Boolean
+  swipeeId                  Int
+  swiperId                  Int
+  user_swipe_swipeeIdTouser user     @relation("swipe_swipeeIdTouser", fields: [swipeeId], references: [id], map: "Swipe_swipeeId_fkey")
+  user_swipe_swiperIdTouser user     @relation("swipe_swiperIdTouser", fields: [swiperId], references: [id], map: "Swipe_swiperId_fkey")
+
+  @@index([swipeeId], map: "Swipe_swipeeId_fkey")
+  @@index([swiperId], map: "Swipe_swiperId_fkey")
+}
+
+model team {
+  createdAt      DateTime         @default(now())
+  hackathonId    Int
+  id             Int              @id @default(autoincrement())
+  isOpen         Boolean          @default(true)
+  name           String
+  ownerId        Int
+  updatedAt      DateTime
+  hackathon      hackathon        @relation(fields: [hackathonId], references: [id], map: "Team_hackathonId_fkey")
+  user           user             @relation(fields: [ownerId], references: [id], map: "Team_ownerId_fkey")
+  teaminvitation teaminvitation[]
+  teammember     teammember[]
+
+  @@index([hackathonId], map: "Team_hackathonId_fkey")
+  @@index([ownerId], map: "Team_ownerId_fkey")
+}
+
+model teaminvitation {
+  id        Int      @id @default(autoincrement())
+  teamId    Int
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  team      team     @relation(fields: [teamId], references: [id], map: "TeamInvitation_teamId_fkey")
+
+  @@index([teamId], map: "TeamInvitation_teamId_fkey")
+}
+
+model teammember {
+  id       Int      @id @default(autoincrement())
+  teamId   Int
+  userId   Int
+  joinedAt DateTime @default(now())
+  role     String
+  team     team     @relation(fields: [teamId], references: [id], map: "TeamMember_teamId_fkey")
+  user     user     @relation(fields: [userId], references: [id], map: "TeamMember_userId_fkey")
+
+  @@unique([teamId, userId], map: "TeamMember_teamId_userId_key")
+  @@index([userId], map: "TeamMember_userId_fkey")
+}
+
+model user {
+  id                                           Int                 @id @default(autoincrement())
+  firstName                                    String
+  lastName                                     String
+  email                                        String              @unique(map: "User_email_key")
+  school                                       String?
+  degree                                       String?
+  education_level                              String?
+  rating                                       Float               @default(0)
+  description                                  String?
+  password                                     String
+  confirm_password                             String
+  createdAt                                    DateTime            @default(now())
+  updatedAt                                    DateTime
+  experience                                   experience[]
+  friendrequest_friendrequest_receiverIdTouser friendrequest[]     @relation("friendrequest_receiverIdTouser")
+  friendrequest_friendrequest_senderIdTouser   friendrequest[]     @relation("friendrequest_senderIdTouser")
+  friendship_friendship_user1IdTouser          friendship[]        @relation("friendship_user1IdTouser")
+  friendship_friendship_user2IdTouser          friendship[]        @relation("friendship_user2IdTouser")
+  message_message_receiverIdTouser             message[]           @relation("message_receiverIdTouser")
+  message_message_senderIdTouser               message[]           @relation("message_senderIdTouser")
+  notification                                 notification[]
+  personalpreference                           personalpreference?
+  review_review_giverIdTouser                  review[]            @relation("review_giverIdTouser")
+  review_review_receiverIdTouser               review[]            @relation("review_receiverIdTouser")
+  swipe_swipe_swipeeIdTouser                   swipe[]             @relation("swipe_swipeeIdTouser")
+  swipe_swipe_swiperIdTouser                   swipe[]             @relation("swipe_swiperIdTouser")
+  team                                         team[]
+  teammember                                   teammember[]
+  userskill                                    userskill[]
+}
+
+model userskill {
+  id      Int    @id @default(autoincrement())
+  userId  Int
+  skillId Int
+  level   String
+  skill   skill  @relation(fields: [skillId], references: [id], map: "UserSkill_skillId_fkey")
+  user    user   @relation(fields: [userId], references: [id], map: "UserSkill_userId_fkey")
+
+  @@unique([userId, skillId], map: "UserSkill_userId_skillId_key")
+  @@index([skillId], map: "UserSkill_skillId_fkey")
 }

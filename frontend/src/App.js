@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react';
 import LoginForm from './components/LoginForm/LoginForm';
 import Navbar from './components/Navbar/Navbar';
 import Register from './components/Register/Register';
+import Personal from './components/personaltype/personal';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './components/Homepage/Homepage';
 import Axios from "axios";
@@ -25,6 +26,7 @@ const App =() => {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<Register />} />
         <Route path="/homepage" element={<Homepage />} />
+        <Route path="/personal" element={<Personal />} />
       </Routes>
       </div>
       

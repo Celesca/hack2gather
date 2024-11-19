@@ -10,7 +10,8 @@
 
 */
 -- AlterTable
-ALTER TABLE `user` DROP COLUMN `DOB`,
+ALTER TABLE `user` 
+    DROP COLUMN `DOB`,
     DROP COLUMN `confirm_password`,
     DROP COLUMN `department`,
     DROP COLUMN `education_level`,
@@ -19,3 +20,9 @@ ALTER TABLE `user` DROP COLUMN `DOB`,
     ADD COLUMN `fieldOfStudy` VARCHAR(191) NULL,
     MODIFY `rating` DOUBLE NOT NULL DEFAULT 0,
     ALTER COLUMN `updatedAt` DROP DEFAULT;
+
+ALTER TABLE `user` 
+    DROP COLUMN `fieldOfStudy`,
+    ADD COLUMN `confirm_password` VARCHAR(191) NOT NULL AFTER `password`,
+    ADD COLUMN `education_level` VARCHAR(191) NOT NULL AFTER `degree`;
+    

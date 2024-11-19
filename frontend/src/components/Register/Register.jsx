@@ -10,8 +10,11 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [school, setSchool] = useState('');
   const [degree, setDegree] = useState(0);
+  const [education_level, seteducation_level] = useState('');
+  const [rating, setrating] = useState(0);
   const [description, setDescription] = useState('');
   const [password, setPassword] = useState('');
+  const [confirm_password, setconfirm_password] = useState('');
 
   const [userlist, setUserlist] = useState([]);
 
@@ -30,8 +33,11 @@ const Register = () => {
       email: email,
       school: school,
       degree: degree,
+      education_level: education_level,
+      rating: rating,
       description: description,
-      password: password
+      password: password,
+      confirm_password: confirm_password
     }).then(() => {
       setUserlist([
         ...userlist,
@@ -41,8 +47,11 @@ const Register = () => {
           email: email,
           school: school,
           degree: degree,
+          education_level: education_level,
+          rating: rating,
           description: description,
-          password: password
+          password: password,
+          confirm_password: confirm_password
         }
       ]);
     });
@@ -106,6 +115,28 @@ const Register = () => {
               <FaUser className="absolute right-4 top-3 text-white" />
             </div>
 
+            <div className="relative">
+              <input 
+                type="text" 
+                placeholder="education_level" 
+                required 
+                className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                onChange={(event) => seteducation_level(event.target.value)}
+              />
+              <FaUser className="absolute right-4 top-3 text-white" />
+            </div>
+
+            <div className="relative">
+              <input 
+                type="number" 
+                placeholder="rating" 
+                required 
+                className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+                onChange={(event) => setrating(event.target.value)}
+              />
+              <FaUser className="absolute right-4 top-3 text-white" />
+            </div>
+
             <div className="relative col-span-2">
               <textarea 
                 placeholder="Short Description" 
@@ -123,6 +154,17 @@ const Register = () => {
               required 
               className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
               onChange={(event) => setPassword(event.target.value)}
+            />
+            <FaLock className="absolute right-4 top-3 text-white" />
+          </div>
+          
+          <div className="relative mt-6 mb-6">
+            <input 
+              type="password" 
+              placeholder="confirm Password" 
+              required 
+              className="w-full h-12 px-4 py-2 bg-transparent border border-white rounded-full text-white placeholder-white focus:outline-none focus:border-white"
+              onChange={(event) => setconfirm_password(event.target.value)}
             />
             <FaLock className="absolute right-4 top-3 text-white" />
           </div>
