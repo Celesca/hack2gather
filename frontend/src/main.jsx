@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import './index.css';
 import App from "./App";
+import Profile from "./profile";
 import ErrorPage from "./error-page";
 import Navbar from "./components/Navbar";
 import Swipe from "./Swipe";
@@ -17,6 +18,7 @@ import Personal from "./personal";
 
 const router = createBrowserRouter([
   {
+<<<<<<< HEAD
     path: "/",
     element: (
       <>
@@ -85,6 +87,16 @@ const router = createBrowserRouter([
       </>
     ),
     errorElement: <ErrorPage />
+=======
+    path: "",
+    element: <App />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+    errorElement: <ErrorPage />,
+>>>>>>> 11d646c95153433dce9d4690ae44e1f7a23b3860
   }
 ]);
 
