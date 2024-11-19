@@ -1,79 +1,106 @@
 import { useState } from 'react';
+import { Search, Menu, X, Bell } from 'lucide-react';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <nav className="bg-gradient-to-r from-purple-700 to-blue-700 p-4 shadow-md fixed w-full z-10">
-      <div className="container mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <div className="text-white text-3xl font-bold tracking-wider cursor-pointer hover:opacity-90">
-          Hack2gather
-        </div>
+    <nav className="bg-gradient-to-r from-purple-700 to-blue-700 p-4 shadow-lg fixed w-full z-50">
+      <div className="container mx-auto">
+        {/* Main navbar content */}
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <div className="text-white text-3xl font-bold tracking-wider cursor-pointer hover:opacity-90 flex items-center">
+              <span className="bg-white text-purple-700 px-2 py-1 rounded-lg mr-2">H2G</span>
+              Hack2gather
+            </div>
+          </div>
 
-        {/* Menu Items */}
-        <div className="hidden md:flex space-x-8">
-          <a href="/" className="text-gray-200 hover:text-white transition duration-300 font-medium">
-            Home
-          </a>
-          
-          <a href="/register" className="text-gray-200 hover:text-white transition duration-300 font-medium">
-            Register
-          </a>
+          {/* Search Bar - Hidden on mobile */}
+          <div className="hidden md:flex flex-1 max-w-xl mx-8">
+            <div className="relative w-full">
+              <input
+                type="text"
+                placeholder="ค้นหากิจกรรม..."
+                className="w-full px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white/50 transition duration-300"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-300" />
+            </div>
+          </div>
 
-          <a href="/login" className="text-gray-200 hover:text-white transition duration-300 font-medium">
-            Login
-          </a>
+          {/* Desktop Menu Items */}
+          <div className="hidden md:flex items-center space-x-6">
+            <a href="/" className="text-white hover:text-purple-200 transition duration-300 font-medium">
+              หน้าแรก
+            </a>
+            <a href="/register" className="text-white hover:text-purple-200 transition duration-300 font-medium">
+              สมัครสมาชิก
+            </a>
+            <a href="/login" className="text-white hover:text-purple-200 transition duration-300 font-medium">
+              เข้าสู่ระบบ
+            </a>
+            <a href="/profile" className="text-white hover:text-purple-200 transition duration-300 font-medium">
+              โปรไฟล์
+            </a>
+            <a href="/swipe" className="text-white hover:text-purple-200 transition duration-300 font-medium">
+              จับคู่
+            </a>
+            {/* Notification Bell */}
+            <button className="p-2 hover:bg-white/10 rounded-full transition duration-300">
+              <Bell className="h-6 w-6 text-white" />
+            </button>
+          </div>
 
-          <a href="/profile" className="text-gray-200 hover:text-white transition duration-300 font-medium">
-          Profile
-          </a>
-         
-        
-          <a href="/swipe" className="text-gray-200 hover:text-white transition duration-300 font-medium">
-            Swipe
-          </a>
-        </div>
-
-        {/* Mobile Toggle Button */}
-        <button
-          className="md:hidden text-gray-200 focus:outline-none"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition duration-300"
+            onClick={() => setIsOpen(!isOpen)}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-            />
-          </svg>
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden mt-4 bg-gradient-to-r from-purple-700 to-blue-700 rounded-lg p-4 shadow-lg">
-          <a href="/" className="block text-gray-200 hover:text-white text-center py-2 transition duration-300 font-semibold">
-            Home
-          </a>
-          <a href="#" className="block text-gray-200 hover:text-white text-center py-2 transition duration-300 font-semibold">
-            About
-          </a>
-          <a href="#" className="block text-gray-200 hover:text-white text-center py-2 transition duration-300 font-semibold">
-            Contact
-          </a>
-          <a href="/swipe" className="block text-gray-200 hover:text-white text-center py-2 transition duration-300 font-semibold">
-            Swipe
-          </a>
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
-      )}
+
+        {/* Mobile Search - Only visible on mobile */}
+        <div className="mt-4 md:hidden">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="ค้นหากิจกรรม..."
+              className="w-full px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white/50"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-300" />
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="md:hidden mt-4 bg-white/5 backdrop-blur-lg rounded-lg border border-white/10">
+            <div className="flex flex-col space-y-2 p-4">
+              <a href="/" className="text-white hover:bg-white/10 px-4 py-2 rounded-lg transition duration-300">
+                หน้าแรก
+              </a>
+              <a href="/register" className="text-white hover:bg-white/10 px-4 py-2 rounded-lg transition duration-300">
+                สมัครสมาชิก
+              </a>
+              <a href="/login" className="text-white hover:bg-white/10 px-4 py-2 rounded-lg transition duration-300">
+                เข้าสู่ระบบ
+              </a>
+              <a href="/profile" className="text-white hover:bg-white/10 px-4 py-2 rounded-lg transition duration-300">
+                โปรไฟล์
+              </a>
+              <a href="/swipe" className="text-white hover:bg-white/10 px-4 py-2 rounded-lg transition duration-300">
+                จับคู่
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
     </nav>
   );
 }

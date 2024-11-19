@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import Swipe from "./Swipe";
 import Register from "./Register";
 import LoginForm from "./LoginForm";
+import Profile from "./profile";
 
 const router = createBrowserRouter([
   {
@@ -35,9 +36,9 @@ const router = createBrowserRouter([
   },
   {
   path: "/profile",
-  element: <ErrorPage />,
+  element: <Profile />,
   errorElement: <ErrorPage />
-}
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
