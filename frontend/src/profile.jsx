@@ -91,7 +91,7 @@ const Profile = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-sky-100 flex items-center justify-center p-4">
 
-        <div className="p-64 space-y-10 bg-white rounded-lg shadow-md max-w-full max-h-screen">
+        <div className="p-6 space-y-10 bg-white rounded-lg shadow-md max-w-full max-h-screen">
           {/* Profile Header Section */}
           <div className="flex items-start gap-6">
             {/* Profile Image */}
