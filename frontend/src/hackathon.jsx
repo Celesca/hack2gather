@@ -1,4 +1,20 @@
+/*import Axios from 'axios'*/
 const Hackathon = () => {
+  const [hackathonID, ] = useState([])
+  
+  const getHackathon = () => {
+    Axios.get('http://localhost:3307/{hackathonID}').then((response) =>{
+      setHackathonlist(response.data)
+      
+    })
+  }
+  useEffect(() => {
+    if (hackathonID) {  // ตรวจสอบว่า hackathonID มีค่า
+      getHackathon();
+    }
+  }, [hackathonID]);
+
+
   return (
     <div>
       {/* หัวรอใส่รูป */}
@@ -19,21 +35,19 @@ const Hackathon = () => {
           กิจกรรมแนะนำ
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {Array(8)
-            .fill()
-            .map((_, index) => (
+          {hackathonlist.map((hackathon, index) => (
               <div
-                key={index}
+                key={HackathonID}
                 className="bg-gray-800 rounded shadow overflow-hidden"
               >
                 <img
-                  src={`https://via.placeholder.com/300?text=+${index + 1}`}
-                  alt={`สินค้า ${index + 1}`}
+                  src={`https://via.placeholder.com/300?text=${hackathon.img}}`}
+                  alt={`กิจกรรม ${hackathon.img}`}
                   className="w-full h-40 object-cover"
                 />
                 <div className="p-4">
                   <h3 className="text-lg font-bold text-white">
-                     {index + 1}
+                     {Name}
                   </h3>
                   <p className="text-sm text-gray-400">รายละเอียด...</p>
                   <button className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
