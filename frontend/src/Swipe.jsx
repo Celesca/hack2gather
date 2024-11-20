@@ -222,4 +222,4 @@ const Swipe = () => {
   );
 };
 
-export default Swipe;
+export default Swipe; 
