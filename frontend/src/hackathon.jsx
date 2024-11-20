@@ -1,9 +1,8 @@
-
 const Hackathon = () => {
   return (
     <div>
       {/* หัวรอใส่รูป */}
-      <div className="bg-gray-700 h-40 flex items-center justify-center mt-20">
+      <div className="bg-gray-700 h-60 flex items-center justify-center pt-20">
         <div className="container mx-auto text-center">
           <h1 className="text-3xl font-bold text-white">
             ยินดีต้อนรับสู่ eiei
